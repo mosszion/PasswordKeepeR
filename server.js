@@ -52,48 +52,62 @@ app.use('/routes', routes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index', {userName: "pat"});
+  const userName = req.session.name;
+
+  res.render('index', {userName});
 });
+
+app.post ('/', (req,res) => {
+  const name = req.body.email;
+  const pass = req.body.password
+  req.session.name = name;
+  console.log(name);
+  res.render("index", {userName:name});
+
+})
 
 // log in
-app.get('/login/:user_id', (req, res) => {
-  // set cookie using cookie-session
-  req.session.user_id = req.params.user_id;
+// app.get('/login/:user_id', (req, res) => {
+//   // set cookie using cookie-session
+//   req.session.user_id = req.params.user_id;
 
-  // Redirect to home page..TO DO
-  res.redirect('index');
-});
+//   // Redirect to home page..TO DO
+//   res.redirect('index');
+// });
 
 // Add an endpoint to handle a GET for /login
 app.get("/login", (req, res) => {
-  const userID = req.session.user_id;
+
+
 
   // If the user is already logged in then redirect to home page...fix after
-  if (userID) {
-    res.redirect("index");
-  }
+
+
 
   // res.render("login", { user_id: userID });
-  res.render("login");
+  res.render("login")
 });
 
 // Add an endpoint to handle a POST to /login
-app.post("/login", (req, res) => {
-  /**
-   * Write the code to determine what org the user belongs to and if they are an admin (use the email
-   * entered to determine).
-   * If they are an admin then let them create and delete accounts, as well as add users to users table.
-   * If the user doesn't belong to an org then show idex page with no accounts
-   */
-  res.render("index")
+// app.post("/login", (req, res) => {
+//   /**
+//    * Write the code to determine what org the user belongs to and if they are an admin (use the email
+//    * entered to determine).
+//    * If they are an admin then let them create and delete accounts, as well as add users to users table.
+//    * If the user doesn't belong to an org then show idex page with no accounts
+//    */
+//   res.render("index")
 
-});
+// });
 
 app.get('/new', (req, res) => {
-  res.render('newAccount', {userName: "mossi"});
+ const userName = req.session.name
+  res.render('newAccount', {userName});
 });
 
 app.get('/logout',(req,res) => {
+  req.session = null;
+  res.clearCookie('session');
   res.render('login');
 })
 
