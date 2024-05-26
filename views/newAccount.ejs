@@ -12,8 +12,9 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" /> -->
-  <link rel="stylesheet" href="/styles/first.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/styles/first.css" />
+  <link rel="stylesheet" href="/styles/third.css" />
 
 
   <script src="/vendor/jquery-3.0.0.js"></script>
@@ -31,7 +32,7 @@
       <li><a href="/" ><button><i class="fas fa-home"></i> Home</button></a></li>
       <li><button><i class="fas fa-lock"></i> Passwords</button></li>
       <li><button><i class="fas fa-search"></i> Browse</button></li>
-      <li><a href="/new" ><button><i class="fas fa-add"></i> Add</button></a></li>
+      <li><button><i class="fas fa-add"></i> Add</button></li>
 
       <li></li>
 
@@ -58,7 +59,7 @@
 
           <div class="dropdown-content">
 
-            <a href="/logout">Logout</a>
+            <a  href="/logout">Logout</a>
 
           </div>
 
@@ -67,86 +68,78 @@
       </div>
 
     </div>
+    <div>
+      <div class="header">
 
-    <div class=" search">
+        <h2 id="addPassword">Add password</h2>
+
+      </div>
+
+
+      <div class="container">
+
+
+        <div class="form-group">
+
+          <label class="label">URL:</label>
+
+          <input type="text" class="input" placeholder="Enter URL">
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label class="label">Name:</label>
+
+          <input type="text" class="input" placeholder="Enter Name">
+
+        </div>
 
 
 
+
+
+        <div class="form-group">
+
+          <label class="label">Username:</label>
+
+          <input type="text" class="input" placeholder="Enter Username">
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label class="label">Site password:</label>
+
+          <input type="password" class="input" placeholder="Enter Site password" minlength="12" maxlength="30">
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label class="label">Notes:</label>
+
+          <textarea class="input" placeholder="Enter Notes"></textarea>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <button class="button cancel">Cancel</button>
+
+          <button class="button">Save</button>
+
+        </div>
+
+      </div>
 
     </div>
 
-    <table class="table">
 
-      <thead>
-
-        <tr>
-
-          <th>No</th>
-
-          <th>Website URL</th>
-
-          <th>Username</th>
-
-          <th>Password</th>
-
-          <th>Edit</th>
-
-          <th>Delete</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        <tr>
-
-          <td>1</td>
-
-          <td>facebook.com</td>
-
-          <td>abc@yahoo.com</td>
-
-          <td>abcdef</td>
-
-          <td class="action">
-
-            <button class="edit">Edit</button>
-
-
-          </td>
-          <td class="action">
-            <button class="delete">Delete</button>
-
-          </td>
-        </tr>
-
-        <tr>
-
-          <td>2</td>
-
-          <td>github.com</td>
-
-          <td>abc@yahoo.com</td>
-
-          <td>ghijkl</td>
-
-          <td class="action">
-
-            <button class="edit">Edit</button>
-
-
-          </td>
-          <td class="action">
-
-            <button class="delete">Delete</button>
-          </td>
-
-        </tr>
-
-      </tbody>
-
-    </table>
 
   </div>
 
