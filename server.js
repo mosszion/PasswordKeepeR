@@ -1,6 +1,9 @@
 // load .env data into process.env
 require('dotenv').config();
 
+// Import the databases
+const { urlDatabase, users } = require('./db/temp_db/database');
+
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
@@ -85,13 +88,18 @@ app.post("/login", (req, res) => {
    * If they are an admin then let them create and delete accounts, as well as add users to users table.
    * If the user doesn't belong to an org then show idex page with no accounts
    */
+  console.log(users);
+
+  console.log(req.body.email);
+
+  console.log(req.body.password);
+
   res.render("index")
-
 });
 
-app.get('/new', (req, res) => {
-  res.render('newAccount', {userName: "mossi"});
-});
+// app.get('/new', (req, res) => {
+//   res.render('newAccount', {userName: "mossi"});
+// });
 
 app.get('/logout',(req,res) => {
   res.render('login');

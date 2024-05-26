@@ -43,8 +43,8 @@ body {
 }
 
 .create-account a {
-  color: lightblue; /* Change to your desired color */
-  text-decoration: none; /* Remove underline */
+  color: lightblue; 
+  text-decoration: none; 
 }
 
 .login-form {
