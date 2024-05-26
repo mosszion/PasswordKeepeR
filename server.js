@@ -5,8 +5,9 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieSession = require('cookie-session');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8070;
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -26,18 +27,24 @@ app.use(
 );
 app.use(express.static('public'));
 
+// Tell Express to use the cookie-session middleware
+app.use(cookieSession({
+  name: 'session',
+  keys: ['secret'],
+}));
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
-const usersRoutes = require('./routes/users');
+// const userApiRoutes = require('./routes/users-api');
+// const widgetApiRoutes = require('./routes/widgets-api');
+const routes = require('./routes/routes');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-app.use('/api/users', userApiRoutes);
-app.use('/api/widgets', widgetApiRoutes);
-app.use('/users', usersRoutes);
+// app.use('/api/users', userApiRoutes);
+// app.use('/api/widgets', widgetApiRoutes);
+app.use('/routes', routes);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -46,6 +53,39 @@ app.use('/users', usersRoutes);
 
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+// log in
+app.get('/login/:user_id', (req, res) => {
+  // set cookie using cookie-session
+  req.session.user_id = req.params.user_id;
+
+  // Redirect to home page..TO DO
+  res.redirect('index');
+});
+
+// Add an endpoint to handle a GET for /login
+app.get("/login", (req, res) => {
+  const userID = req.session.user_id;
+
+  // If the user is already logged in then redirect to home page...fix after
+  if (userID) {
+    res.redirect("index");
+  } 
+
+  // res.render("login", { user_id: userID });
+  res.render("login");
+});
+
+// Add an endpoint to handle a POST to /login
+app.post("/login", (req, res) => {
+  /**
+   * Write the code to determine what org the user belongs to and if they are an admin (use the email
+   * entered to determine).
+   * If they are an admin then let them create and delete accounts, as well as add users to users table.
+   * If the user doesn't belong to an org then show idex page with no accounts
+   */
+
 });
 
 app.listen(PORT, () => {
