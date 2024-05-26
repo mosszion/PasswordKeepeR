@@ -71,7 +71,7 @@ app.get("/login", (req, res) => {
   // If the user is already logged in then redirect to home page...fix after
   if (userID) {
     res.redirect("index");
-  } 
+  }
 
   // res.render("login", { user_id: userID });
   res.render("login");
@@ -85,6 +85,7 @@ app.post("/login", (req, res) => {
    * If they are an admin then let them create and delete accounts, as well as add users to users table.
    * If the user doesn't belong to an org then show idex page with no accounts
    */
+  res.render("index")
 
 });
 
@@ -93,7 +94,7 @@ app.get('/new', (req, res) => {
 });
 
 app.get('/logout',(req,res) => {
-  res.send('<html><p>Thanks for using this app</p><a href = "/"><button>Login</button></a></html>');
+  res.render('login');
 })
 
 app.listen(PORT, () => {
