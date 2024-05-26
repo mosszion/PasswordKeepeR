@@ -1,8 +1,4 @@
 node_modules/
-<<<<<<< HEAD
-
-=======
->>>>>>> e2bffaad8e39f9be1258bbc4a280469563d78929
 .env
 *.log
 *.sqlite3
