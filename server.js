@@ -86,8 +86,7 @@ app.post ('/', (req,res) => {
 
 // Add an endpoint to handle a GET for /login
 app.get("/login", (req, res) => {
-
-
+  const userID = req.session.user_id;
 
   // If the user is already logged in then redirect to home page
   if (userID) {
