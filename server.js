@@ -2,10 +2,6 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-// Import the database functions
-// const { users } = require('./db/temp_db/database');
-const {getUserWithEmail} = require('./db/queries/01_get_user_by_email');
-
 // Import the helper functions
 // const { findUser } = require('./helpers');
 
@@ -24,16 +20,16 @@ app.set('view engine', 'ejs');
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  '/styles',
-  sassMiddleware({
-    source: __dirname + '/styles',
-    destination: __dirname + '/public/styles',
-    isSass: false, // false => scss, true => sass
-  })
-);
+// app.use(
+//   '/styles',
+//   sassMiddleware({
+//     source: __dirname + '/styles',
+//     destination: __dirname + '/public/styles',
+//     isSass: false, // false => scss, true => sass
+//   })
+// );
 app.use(express.static('public'));
 
 // Tell Express to use the cookie-session middleware
@@ -41,6 +37,10 @@ app.use(cookieSession({
   name: 'session',
   keys: ['secret'],
 }));
+
+// Import the database functions
+// const { users } = require('./db/temp_db/database');
+const { getUserWithEmail } = require('./db/queries/01_get_user_by_email');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -60,37 +60,13 @@ app.use('/routes', routes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-app.get('/', (req, res) => {
-  const userName = req.session.name;
-
-  res.render('index', {userName});
-});
-
-app.post ('/', (req,res) => {
-  const name = req.body.email;
-  const pass = req.body.password
-  req.session.name = name;
-  console.log(name);
-  res.render("index", {userName:name});
-
-})
-
-// log in
-// app.get('/login/:user_id', (req, res) => {
-//   // set cookie using cookie-session
-//   req.session.user_id = req.params.user_id;
-
-//   // Redirect to home page..TO DO
-//   res.redirect('index');
-// });
-
 // Add an endpoint to handle a GET for /login
 app.get("/login", (req, res) => {
   const userID = req.session.user_id;
 
   // If the user is already logged in then redirect to home page
   if (userID) {
-    res.redirect("index");
+    res.redirect("/");
   }
 
   // res.render("login", { user_id: userID });
@@ -115,27 +91,55 @@ app.post("/login", (req, res) => {
       return res.status(403).send("Incorrect Password. FYI 'Forgot Password' outside of scope!!!");
     }
 
+    const userName = user.username;
+
     // Set a cookie inside the session object to the value of the user's ID... TO DO
     req.session.user_id = user.id;
 
-    res.redirect("index");
+    res.render("index", { userName });
   })
   .catch((error) => {
     console.error("Error during login:", error);
     res.status(500).send("Internal Server Error");
   });
+});
+
+app.get('/', (req, res) => {
+  const userName = req.session.name;
+
+  res.render('index', {userName});
+});
+
+app.post ('/', (req,res) => {
+  const name = req.body.email;
+  const pass = req.body.password
+  req.session.name = name;
+  console.log(name);
+  res.render("index", {userName:name});
 
 });
 
 app.get('/new', (req, res) => {
-  res.render('newAccount', {userName: "mossi"});
+  const userName = req.session.name;
+
+  res.render('newAccount', { userName });
 });
 
 app.get('/logout',(req,res) => {
   req.session = null;
   res.clearCookie('session');
   res.render('login');
-})
+});
+
+// log in
+// app.get('/login/:user_id', (req, res) => {
+//   // set cookie using cookie-session
+//   req.session.user_id = req.params.user_id;
+
+//   // Redirect to home page..TO DO
+//   res.redirect('index');
+// });
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
