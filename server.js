@@ -3,7 +3,7 @@
 
 // Import the database functions
 // const { users } = require('./db/temp_db/database');
-const db = require('./db/connection');
+const {getUserWithEmail} = require('./db/queries/01_get_user_by_email');
 
 // Import the helper functions
 // const { findUser } = require('./helpers');
@@ -98,7 +98,7 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  db.getUserWithEmail(email).then((user) => {
+  getUserWithEmail(email).then((user) => {
     // If a user with the login email cannot be found, then return response with status 403
     if (!user) {
       return res.status(403).send("Email not found: Please create an account. FYI 'CREATE ACCOUNT' DOES NOT WORK FOR THIS PORJECT - OUTSIDE OF SCOPE!!!");
