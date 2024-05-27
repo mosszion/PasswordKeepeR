@@ -60,6 +60,21 @@ app.use('/routes', routes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+app.get('/', (req, res) => {
+  const userName = req.session.name;
+
+  res.render('index', {userName});
+});
+
+app.post ('/', (req,res) => {
+  const name = req.body.email;
+  const pass = req.body.password
+  req.session.name = name;
+  console.log(name);
+  res.render("index", {userName:name});
+
+});
+
 // Add an endpoint to handle a GET for /login
 app.get("/login", (req, res) => {
   const userID = req.session.user_id;
@@ -102,21 +117,6 @@ app.post("/login", (req, res) => {
     console.error("Error during login:", error);
     res.status(500).send("Internal Server Error");
   });
-});
-
-app.get('/', (req, res) => {
-  const userName = req.session.name;
-
-  res.render('index', {userName});
-});
-
-app.post ('/', (req,res) => {
-  const name = req.body.email;
-  const pass = req.body.password
-  req.session.name = name;
-  console.log(name);
-  res.render("index", {userName:name});
-
 });
 
 app.get('/new', (req, res) => {
