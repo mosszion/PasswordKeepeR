@@ -19,6 +19,7 @@
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+  <script src="/public/scripts/pass3.js"></script>
 </head>
 
 <body>
@@ -80,58 +81,82 @@
 
 
         <div class="form-group">
+          <form id = 'myform'>
 
-          <label class="label">URL:</label>
+            <label class="label">URL:</label>
 
-          <input type="text" class="input" placeholder="Enter URL">
+            <input type="text" class="input" placeholder="Enter URL">
 
-        </div>
+            <label class="label">Name:</label>
 
+            <input type="text" class="input" placeholder="Enter Name">
 
-        <div class="form-group">
+            <label class="label">Username:</label>
 
-          <label class="label">Name:</label>
+            <input type="text" class="input" placeholder="Enter Username">
+            <label class="label">Site password:</label>
 
-          <input type="text" class="input" placeholder="Enter Name">
-
-        </div>
-
-
-
-
-
-        <div class="form-group">
-
-          <label class="label">Username:</label>
-
-          <input type="text" class="input" placeholder="Enter Username">
-
-        </div>
+            <input type="password" id = "generatedPassword" class="input" placeholder="Enter Site password" minlength="12" maxlength="30">
+            <br/>
+            <button type="button" id="generateBtn">Generate</button>
 
 
-        <div class="form-group">
+          <script >
+             // define handy variables
 
-          <label class="label">Site password:</label>
+                    const generatePass = function() {
 
-          <input type="password" class="input" placeholder="Enter Site password" minlength="12" maxlength="30">
+                    const upperABC = 'ABCDEFGHIGKLMNOPQRSTUVWXYZ';
+                    const lowerAbc = 'abcdefghigklmnopqrstuvwxyz';
+                    const specialChar = '!@£$%^&*()_+?/#';
+                    const numbers = "123456789";
 
-        </div>
+                    const charset = upperABC + lowerAbc + specialChar + numbers;
+                    const passLength = 12;
+
+                    let password = '';
+                    for(let i = 0 ; i < 12; i++ ) {
+                      const randomIndex = Math.floor(Math.random() * charset.length )
+                        password += charset[randomIndex];
+
+                        }
+                    console.log(password);
+                    return password;
+                    };
+                    // get the field in the html file to update
+                    const updateField = function(){
+                    const passwordField = document.getElementById('generatedPassword');
+                    const generatefn = generatePass();
+                    passwordField.value = generatefn;
+                    };
+                    // listen to button click
+                    const button = document.getElementById('generateBtn');
+                    button.addEventListener("click",updateField);
+
+                    // clear inputs after refresh
+                    function clearInp () {
+                    document.getElementById('generatedPassword').value = "";
+                    }
 
 
-        <div class="form-group">
-
+                    </script>
           <label class="label">Notes:</label>
 
           <textarea class="input" placeholder="Enter Notes"></textarea>
+          <button class="button cancel" onclick="clearInp">Cancel</button>
 
-        </div>
+          <button class="button" type = "submit">Save</button>
+          </form>
+
+          <script>
+          // clear inputs after refresh
+          function clearInp () {
+          document.getElementById('myform').reset();
+          }
+          </script>
 
 
-        <div class="form-group">
 
-          <button class="button cancel">Cancel</button>
-
-          <button class="button">Save</button>
 
         </div>
 

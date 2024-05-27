@@ -61,21 +61,33 @@ app.use('/routes', routes);
 // Separate them into separate routes files (see above).
 
 app.get('/', (req, res) => {
-  res.render('index', {userName: "pat"});
+  const userName = req.session.name;
+
+  res.render('index', {userName});
 });
+
+app.post ('/', (req,res) => {
+  const name = req.body.email;
+  const pass = req.body.password
+  req.session.name = name;
+  console.log(name);
+  res.render("index", {userName:name});
+
+})
 
 // log in
-app.get('/login/:user_id', (req, res) => {
-  // set cookie using cookie-session
-  req.session.user_id = req.params.user_id;
+// app.get('/login/:user_id', (req, res) => {
+//   // set cookie using cookie-session
+//   req.session.user_id = req.params.user_id;
 
-  // Redirect to home page..TO DO
-  res.redirect('index');
-});
+//   // Redirect to home page..TO DO
+//   res.redirect('index');
+// });
 
 // Add an endpoint to handle a GET for /login
 app.get("/login", (req, res) => {
-  const userID = req.session.user_id;
+
+
 
   // If the user is already logged in then redirect to home page
   if (userID) {
@@ -83,7 +95,7 @@ app.get("/login", (req, res) => {
   }
 
   // res.render("login", { user_id: userID });
-  res.render("login");
+  res.render("login")
 });
 
 // Add an endpoint to handle a POST to /login
@@ -116,11 +128,13 @@ app.post("/login", (req, res) => {
 
 });
 
-// app.get('/new', (req, res) => {
-//   res.render('newAccount', {userName: "mossi"});
-// });
+app.get('/new', (req, res) => {
+  res.render('newAccount', {userName: "mossi"});
+});
 
 app.get('/logout',(req,res) => {
+  req.session = null;
+  res.clearCookie('session');
   res.render('login');
 })
 

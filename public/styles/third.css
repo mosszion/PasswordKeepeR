@@ -99,21 +99,21 @@ h2#addPassword {
 
 .cancel {
 
-  background-color: #f44336;
+  background-color: #ff0000;
 
 }
 
 
 .cancel:hover {
 
-  background-color: #d32f2f;
+  background-color: #ff0000;
 
 }
 
 
 .header {
 
-  background-color: #f44336;
+  background-color: #ff0000;
 
   color: white;
 
