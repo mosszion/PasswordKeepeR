@@ -39,8 +39,8 @@ app.use(cookieSession({
 }));
 
 // Import the database functions
-// const { users } = require('./db/temp_db/database');
 const { getUserWithEmail } = require('./db/queries/01_get_user_by_email');
+const { addAccountToDatabase } = require('./db/queries/03_add_account_to_db');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
