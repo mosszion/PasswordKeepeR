@@ -42,6 +42,7 @@ app.use(cookieSession({
 const { getUserWithEmail } = require('./db/queries/01_get_user_by_email');
 const { addAccountToDatabase } = require('./db/queries/03_add_account_to_db');
 const { selectAccountFromDB } = require('./db/queries/04_select_account');
+const { deleteAccountFromDB } = require('./db/queries/05_delete_account');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -66,7 +67,7 @@ app.get('/', (req, res) => {
 
   // Selects all accounts and renders table dynamically
   selectAccountFromDB().then((accounts) => {
-    console.log(account);
+    console.log(accounts);
 
     res.render('index', {userName, accounts});
   })
@@ -155,6 +156,29 @@ app.post("/new", (req, res) => {
   })
   .catch((error) => {
     console.error("Error during adding account:", error);
+    res.status(500).send("Internal Server Error");
+  });
+});
+
+app.get('/logout',(req,res) => {
+  req.session = null;
+  res.clearCookie('session');
+  res.render('login');
+});
+
+// Add an endpoint to handle a POST to :account/delete
+app.post("/delete", (req, res) => {
+  // Store the account ID to be deleted
+  const accountToDeleteID = req.body.accountID;
+
+  // Add a new account to the db
+  deleteAccountFromDB(accountToDeleteID).then((deletedAccount) => {
+    console.log(deletedAccount);
+
+    res.redirect("/");
+  })
+  .catch((error) => {
+    console.error("Error during deleting account:", error);
     res.status(500).send("Internal Server Error");
   });
 });

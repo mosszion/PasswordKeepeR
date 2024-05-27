@@ -164,8 +164,12 @@
   
             </td>
             <td class="action">
-  
-              <button class="delete">Delete</button>
+              
+              <form method="POST" action="/delete">
+                <input type="hidden" name="accountID" value="<%= accounts[parameter].id %>">
+                <button class="delete">Delete</button>
+              </form>
+
             </td>
   
           </tr>
