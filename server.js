@@ -120,12 +120,19 @@ app.post("/login", (req, res) => {
       return res.status(403).send("Incorrect Password. FYI 'Forgot Password' outside of scope!!!");
     }
 
-    const userName = user.username;
+    // Fetch the accounts data for the user
+    selectAccountFromDB()
+    .then((accounts) => {
+      const userName = user.username;
+      // Set a cookie inside the session object to the value of the user's ID... TO DO
+      req.session.user_id = user.id;
 
-    // Set a cookie inside the session object to the value of the user's ID... TO DO
-    req.session.user_id = user.id;
-
-    res.render("index", { userName });
+      res.render("index", { userName, accounts });
+    })
+    .catch((error) => {
+      console.error("Error fetching accounts:", error);
+      res.status(500).send("Internal Server Error");
+    });
   })
   .catch((error) => {
     console.error("Error during login:", error);
@@ -160,18 +167,12 @@ app.post("/new", (req, res) => {
   });
 });
 
-app.get('/logout',(req,res) => {
-  req.session = null;
-  res.clearCookie('session');
-  res.render('login');
-});
-
 // Add an endpoint to handle a POST to :account/delete
 app.post("/delete", (req, res) => {
   // Store the account ID to be deleted
   const accountToDeleteID = req.body.accountID;
 
-  // Add a new account to the db
+  // Delete account from the db
   deleteAccountFromDB(accountToDeleteID).then((deletedAccount) => {
     console.log(deletedAccount);
 
