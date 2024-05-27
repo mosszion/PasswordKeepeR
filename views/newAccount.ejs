@@ -81,22 +81,22 @@
 
 
         <div class="form-group">
-          <form id = 'myform'>
+          <form id = 'myform' action="/new" method="POST">
 
             <label class="label">URL:</label>
 
-            <input type="text" class="input" placeholder="Enter URL">
+            <input type="text" class="input" id="url" name="url" placeholder="Enter URL">
 
             <label class="label">Name:</label>
 
-            <input type="text" class="input" placeholder="Enter Name">
+            <input type="text" class="input" id="accountName" name="accountName" placeholder="Enter Name">
 
             <label class="label">Username:</label>
 
-            <input type="text" class="input" placeholder="Enter Username">
+            <input type="text" class="input" id="username" name="username" placeholder="Enter Username">
             <label class="label">Site password:</label>
 
-            <input type="password" id = "generatedPassword" class="input" placeholder="Enter Site password" minlength="12" maxlength="30">
+            <input type="password" id = "generatedPassword" class="input" id="password" name="password" placeholder="Enter Site password" minlength="12" maxlength="30">
             <br/>
             <button type="button" id="generateBtn">Generate</button>
 
@@ -142,7 +142,7 @@
                     </script>
           <label class="label">Notes:</label>
 
-          <textarea class="input" placeholder="Enter Notes"></textarea>
+          <textarea class="input" id="notes" name="notes" placeholder="Enter Notes"></textarea>
           <button class="button cancel" onclick="clearInp">Cancel</button>
 
           <button class="button" type = "submit">Save</button>

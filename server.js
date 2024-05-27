@@ -125,6 +125,25 @@ app.get('/new', (req, res) => {
   res.render('newAccount', { userName });
 });
 
+// Add an endpoint to handle a POST to /new
+app.post("/new", (req, res) => {
+  // Store the new account information
+  const accountName = req.body.accountName;
+  const username = req.body.username;
+  const password = req.body.password;
+  const url = req.body.url;
+  const notes = req.body.notes;
+
+  addAccountToDatabase(accountName, username, password, url, notes).then((account) => {
+    console.log(account);
+    // res.render("index", { userName });
+  })
+  .catch((error) => {
+    console.error("Error during adding account:", error);
+    res.status(500).send("Internal Server Error");
+  });
+});
+
 app.get('/logout',(req,res) => {
   req.session = null;
   res.clearCookie('session');
