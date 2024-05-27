@@ -1,7 +1,7 @@
 -- Users seeds
 INSERT INTO users (username, email, password, organization_id) VALUES ('john_doe', 'john@example.com', 'password', 1);
 INSERT INTO users (username, email, password, organization_id) VALUES ('alice_smith', 'alice@example.com', 'password', 2);
-INSERT INTO users (username, email, password, organization_id) VALUES ('bob_jones', 'bob@example.com', 'password', 3;
+INSERT INTO users (username, email, password, organization_id) VALUES ('bob_jones', 'bob@example.com', 'password', 3);
 INSERT INTO users (username, email, password, organization_id) VALUES ('emma_davis', 'emma@example.com', 'password', 4);
 INSERT INTO users (username, email, password, organization_id) VALUES ('sam_wilson', 'sam@example.com', 'password', 5);
 

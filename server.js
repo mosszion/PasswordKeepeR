@@ -1,8 +1,12 @@
 // load .env data into process.env
-require('dotenv').config();
+// require('dotenv').config();
 
-// Import the databases
-const { urlDatabase, users } = require('./db/temp_db/database');
+// Import the database functions
+// const { users } = require('./db/temp_db/database');
+const db = require('./db/connection');
+
+// Import the helper functions
+// const { findUser } = require('./helpers');
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -10,7 +14,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 
-const PORT = process.env.PORT || 8070;
+// const PORT = process.env.PORT || 8060;
+const PORT = 8070;
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -71,7 +76,7 @@ app.get('/login/:user_id', (req, res) => {
 app.get("/login", (req, res) => {
   const userID = req.session.user_id;
 
-  // If the user is already logged in then redirect to home page...fix after
+  // If the user is already logged in then redirect to home page
   if (userID) {
     res.redirect("index");
   }
@@ -88,13 +93,33 @@ app.post("/login", (req, res) => {
    * If they are an admin then let them create and delete accounts, as well as add users to users table.
    * If the user doesn't belong to an org then show idex page with no accounts
    */
-  console.log(users);
 
-  console.log(req.body.email);
+  // Store the user email and password
+  const email = req.body.email;
+  const password = req.body.password;
 
-  console.log(req.body.password);
+  db.getUserWithEmail(email).then((user) => {
+    // If a user with the login email cannot be found, then return response with status 403
+    if (!user) {
+      return res.status(403).send("Email not found: Please create an account. FYI 'CREATE ACCOUNT' DOES NOT WORK FOR THIS PORJECT - OUTSIDE OF SCOPE!!!");
+    }
 
-  res.render("index")
+    // If a user that matches the email is found, then verify the password entered by the user
+    // matches what is stored
+    if (password !== user.password) {
+      return res.status(403).send("Incorrect Password. FYI 'Forgot Password' outside of scope!!!");
+    }
+
+    // Set a cookie inside the session object to the value of the user's ID... TO DO
+    req.session.user_id = user.id;
+
+    res.redirect("index");
+  })
+  .catch((error) => {
+    console.error("Error during login:", error);
+    res.status(500).send("Internal Server Error");
+  });
+
 });
 
 // app.get('/new', (req, res) => {
