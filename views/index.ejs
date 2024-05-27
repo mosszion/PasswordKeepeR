@@ -145,17 +145,17 @@
 
         </tr>
 
-        
-        <% for (let parameter in account) { %>
+        <!-- Render rows dyncamically -->
+        <% for (let parameter in accounts) { %>
           <tr>
 
-            <td><%= account[parameter].id %></td>
+            <td><%= accounts[parameter].id %></td>
   
-            <td><%= account[parameter].website_url %></td>
+            <td><%= accounts[parameter].website_url %></td>
   
-            <td><%= account[parameter].username %></td>
+            <td><%= accounts[parameter].username %></td>
   
-            <td><%= account[parameter].password %></td>
+            <td><%= accounts[parameter].password %></td>
   
             <td class="action">
   

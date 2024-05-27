@@ -63,11 +63,12 @@ app.use('/routes', routes);
 
 app.get('/', (req, res) => {
   const userName = req.session.name;
-  
-  selectAccountFromDB().then((account) => {
+
+  // Selects all accounts and renders table dynamically
+  selectAccountFromDB().then((accounts) => {
     console.log(account);
 
-    res.render('index', {userName, account});
+    res.render('index', {userName, accounts});
   })
   .catch((error) => {
     console.error("Error rendering home page:", error);
@@ -105,6 +106,7 @@ app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  // Get the users information using their email
   getUserWithEmail(email).then((user) => {
     // If a user with the login email cannot be found, then return response with status 403
     if (!user) {
@@ -145,8 +147,7 @@ app.post("/new", (req, res) => {
   const url = req.body.url;
   const notes = req.body.notes;
 
-  const userName = req.session.name;
-
+  // Add a new account to the db
   addAccountToDatabase(accountName, username, password, url, notes).then((account) => {
     console.log(account);
 
