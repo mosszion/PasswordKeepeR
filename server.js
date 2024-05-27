@@ -41,6 +41,7 @@ app.use(cookieSession({
 // Import the database functions
 const { getUserWithEmail } = require('./db/queries/01_get_user_by_email');
 const { addAccountToDatabase } = require('./db/queries/03_add_account_to_db');
+const { selectAccountFromDB } = require('./db/queries/04_select_account');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -62,8 +63,17 @@ app.use('/routes', routes);
 
 app.get('/', (req, res) => {
   const userName = req.session.name;
+  
+  selectAccountFromDB().then((account) => {
+    console.log(account);
 
-  res.render('index', {userName});
+    res.render('index', {userName, account});
+  })
+  .catch((error) => {
+    console.error("Error rendering home page:", error);
+    res.status(500).send("Internal Server Error");
+  });
+  
 });
 
 app.post ('/', (req,res) => {
@@ -71,6 +81,7 @@ app.post ('/', (req,res) => {
   const pass = req.body.password
   req.session.name = name;
   console.log(name);
+
   res.render("index", {userName:name});
 
 });
@@ -134,9 +145,12 @@ app.post("/new", (req, res) => {
   const url = req.body.url;
   const notes = req.body.notes;
 
+  const userName = req.session.name;
+
   addAccountToDatabase(accountName, username, password, url, notes).then((account) => {
     console.log(account);
-    // res.render("index", { userName });
+
+    res.redirect("/");
   })
   .catch((error) => {
     console.error("Error during adding account:", error);

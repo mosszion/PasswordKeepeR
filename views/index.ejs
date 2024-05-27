@@ -145,6 +145,32 @@
 
         </tr>
 
+        
+        <% for (let parameter in account) { %>
+          <tr>
+
+            <td><%= account[parameter].id %></td>
+  
+            <td><%= account[parameter].website_url %></td>
+  
+            <td><%= account[parameter].username %></td>
+  
+            <td><%= account[parameter].password %></td>
+  
+            <td class="action">
+  
+              <button class="edit">Edit</button>
+  
+  
+            </td>
+            <td class="action">
+  
+              <button class="delete">Delete</button>
+            </td>
+  
+          </tr>
+        <% } %>
+
       </tbody>
 
     </table>
