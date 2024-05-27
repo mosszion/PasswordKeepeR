@@ -1,5 +1,6 @@
 // load .env data into process.env
-// require('dotenv').config();
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Import the database functions
 // const { users } = require('./db/temp_db/database');
@@ -14,8 +15,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieSession = require('cookie-session');
 
-// const PORT = process.env.PORT || 8060;
-const PORT = 8070;
+const PORT = process.env.PORT || 8070;
+// const PORT = 8070;
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -87,13 +88,6 @@ app.get("/login", (req, res) => {
 
 // Add an endpoint to handle a POST to /login
 app.post("/login", (req, res) => {
-  /**
-   * Write the code to determine what org the user belongs to and if they are an admin (use the email
-   * entered to determine).
-   * If they are an admin then let them create and delete accounts, as well as add users to users table.
-   * If the user doesn't belong to an org then show idex page with no accounts
-   */
-
   // Store the user email and password
   const email = req.body.email;
   const password = req.body.password;
