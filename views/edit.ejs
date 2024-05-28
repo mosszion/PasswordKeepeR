@@ -87,18 +87,18 @@
 
             <label class="label">URL:</label>
 
-            <input type="text" class="input" id="url" name="url" placeholder=<%= accountInfo.website_url %>>
+            <input type="text" class="input" id="url" name="url" placeholder="Enter URL" value="<%= accountInfo.website_url %>">
 
             <label class="label">Name:</label>
 
-            <input type="text" class="input" id="accountName" name="accountName" placeholder=<%= accountInfo.account_name %>>
+            <input type="text" class="input" id="accountName" name="accountName" placeholder="Enter Name" value="<%= accountInfo.account_name %>">
 
             <label class="label">Username:</label>
 
-            <input type="text" class="input" id="username" name="username" placeholder=<%= accountInfo.username %>>
+            <input type="text" class="input" id="username" name="username" placeholder="Enter username" value="<%= accountInfo.username %>">
             <label class="label">Site password:</label>
 
-            <input type="password" id = "generatedPassword" class="input" id="password" name="password" placeholder=<%= accountInfo.password %> minlength="12" maxlength="30">
+            <input type="password" id = "generatedPassword" class="input" id="password" name="password" placeholder="Enter password" value="<%= accountInfo.password %>" minlength="12" maxlength="30">
             <br/>
             <button type="button" id="generateBtn">Generate</button>
 
@@ -144,7 +144,7 @@
                     </script>
           <label class="label">Notes:</label>
 
-          <textarea class="input" id="notes" name="notes" placeholder=<%= accountInfo.description %>></textarea>
+          <textarea class="input" id="notes" name="notes" placeholder="Enter Notes" value="<%= accountInfo.description %>"></textarea>
           <button class="button cancel" onclick="clearInp">Cancel</button>
 
           <button class="button" type = "submit">Save</button>
