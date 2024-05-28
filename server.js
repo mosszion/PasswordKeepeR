@@ -263,6 +263,16 @@ app.get('/logout',(req,res) => {
   res.render('login');
 });
 
+// log in
+// app.get('/login/:user_id', (req, res) => {
+//   // set cookie using cookie-session
+//   req.session.user_id = req.params.user_id;
+
+//   // Redirect to home page..TO DO
+//   res.redirect('index');
+// });
+
+// testttttttttttttttttttttttttts
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
