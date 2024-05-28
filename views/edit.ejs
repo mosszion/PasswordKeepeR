@@ -81,7 +81,9 @@
 
 
         <div class="form-group">
-          <form id = 'myform' action="/new" method="POST">
+          <form id = 'myform' action="/edit" method="POST">
+            <!-- Add accountID as hidden input so can pass it -->
+            <input type="hidden" id="accountID" name="accountID" value="<%= accountInfo.id %>">
 
             <label class="label">URL:</label>
 

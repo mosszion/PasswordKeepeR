@@ -187,17 +187,17 @@ app.get("/edit", (req, res) => {
 // Add an endpoint to handle a POST to :account/edit
 app.post("/edit", (req, res) => {
   // Store the account ID of the account to be edited
-  const accountToEditID = req.body.accountID;
+  const accountID = req.body.accountID;
 
   // Store the edited account information
-  const accountName = req.body.accountName;
-  const username = req.body.username;
-  const password = req.body.password;
-  const url = req.body.url;
-  const notes = req.body.notes;
+  accountName= req.body.accountName;
+  username = req.body.username;
+  password = req.body.password;
+  url = req.body.url;
+  notes = req.body.notes;
 
   // Delete account from the db
-  editAccountInDB(accountToEditID, accountName, username, password, url, notes).then((editedAccount) => {
+  editAccountInDB(accountID, accountName, username, password, url, notes).then((editedAccount) => {
     console.log(editedAccount);
 
     res.redirect("/");
