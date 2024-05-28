@@ -46,6 +46,7 @@ const { selectAccountFromDB } = require('./db/queries/04_select_account');
 const { deleteAccountFromDB } = require('./db/queries/05_delete_account');
 const { editAccountInDB } = require('./db/queries/06_edit_account');
 const { selectSingleAccountFromDB } = require('./db/queries/07_select_single_account');
+const { selectOrgAccountsFromDB } = require('./db/queries/08_select_specific_org_accounts');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -68,8 +69,11 @@ app.use('/routes', routes);
 app.get('/', (req, res) => {
   const userName = req.session.name;
 
-  // Selects all accounts and renders table dynamically
-  selectAccountFromDB().then((accounts) => {
+  // Store session for organization id
+  const organizationID = req.session.organizationID;
+
+  // Selects all accounts that belong to an organization and renders table dynamically
+  selectOrgAccountsFromDB(organizationID).then((accounts) => {
     // console.log(accounts);
 
     res.render('index', {userName, accounts});
@@ -123,23 +127,16 @@ app.post("/login", (req, res) => {
       return res.status(403).send("Incorrect Password. FYI 'Forgot Password' outside of scope!!!");
     }
 
-    // Fetch the accounts data for the user
-    selectAccountFromDB()
-    .then((accounts) => {
-      const userName = user.username;
-      // Set a cookie inside the session object to the value of the user's ID... TO DO
-      req.session.user_id = user.id;
+    req.session.organizationID = user.organization_id;
 
-      // Set other required cookies
-      req.session.email = user.email;
-      req.session.name = user.username;
+    // Set a cookie inside the session object to the value of the user's ID... TO DO
+    req.session.user_id = user.id;
 
-      res.render("index", { userName, accounts });
-    })
-    .catch((error) => {
-      console.error("Error fetching accounts:", error);
-      res.status(500).send("Internal Server Error");
-    });
+    // Set other required cookies
+    req.session.email = user.email;
+    req.session.name = user.username;
+
+    res.redirect("/");
   })
   .catch((error) => {
     console.error("Error during login:", error);
@@ -164,13 +161,23 @@ app.post("/new", (req, res) => {
 
   // Store the user email
   const email = req.session.email;
-  console.log(email);
+
+  // If the email doesn't exist then return error staus
+  if (!email) {
+    return res.status(403).send("User email not found.");
+  }
 
   // Store the organization id
   getUserWithEmail(email).then((user) => {
-    console.log(user);
+    // If the user doesn't exists for the email then return error status
+    if (!user) {
+      return res.status(404).send("User not found with the provided email");
+    }
 
     const organizationID = user.organization_id;
+
+    // store organization session
+    req.session.organizationID = organizationID;
 
     // Add a new account to the db
     addAccountToDatabase(accountName, username, password, url, notes, organizationID).then((account) => {
