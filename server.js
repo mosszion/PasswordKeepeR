@@ -44,6 +44,7 @@ const { addAccountToDatabase } = require('./db/queries/03_add_account_to_db');
 const { selectAccountFromDB } = require('./db/queries/04_select_account');
 const { deleteAccountFromDB } = require('./db/queries/05_delete_account');
 const { editAccountInDB } = require('./db/queries/06_edit_account');
+const { selectSingleAccountFromDB } = require('./db/queries/07_select_single_account');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -68,7 +69,7 @@ app.get('/', (req, res) => {
 
   // Selects all accounts and renders table dynamically
   selectAccountFromDB().then((accounts) => {
-    console.log(accounts);
+    // console.log(accounts);
 
     res.render('index', {userName, accounts});
   })
@@ -83,7 +84,7 @@ app.post ('/', (req,res) => {
   const name = req.body.email;
   const pass = req.body.password
   req.session.name = name;
-  console.log(name);
+  // console.log(name);
 
   res.render("index", {userName:name});
 
@@ -158,7 +159,7 @@ app.post("/new", (req, res) => {
 
   // Add a new account to the db
   addAccountToDatabase(accountName, username, password, url, notes).then((account) => {
-    console.log(account);
+    // console.log(account);
 
     res.redirect("/");
   })
@@ -170,12 +171,17 @@ app.post("/new", (req, res) => {
 
 // Add an endpoint to handle a GET request to :account/edit
 app.get("/edit", (req, res) => {
+  const userName = req.body.username;
+
   // Store the account ID of the account to be edited
   const accountID = req.query.accountID;
 
-  const userName = req.session.name;
+  // Store the account information
+  selectSingleAccountFromDB(accountID).then((accountInfo) => {
+    console.log(accountInfo);
+    res.render("edit", { userName, accountID, accountInfo });
+  });
 
-  res.render("edit", { userName, accountID });
 });
 
 // Add an endpoint to handle a POST to :account/edit
@@ -215,7 +221,7 @@ app.post("/delete", (req, res) => {
 
   // Delete account from the db
   deleteAccountFromDB(accountToDeleteID).then((deletedAccount) => {
-    console.log(deletedAccount);
+    // console.log(deletedAccount);
 
     res.redirect("/");
   })
