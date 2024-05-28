@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
     console.error("Error rendering home page:", error);
     res.status(500).send("Internal Server Error");
   });
-  
+
 });
 
 app.post ('/', (req,res) => {
@@ -146,6 +146,8 @@ app.post("/login", (req, res) => {
 
 app.get('/new', (req, res) => {
   const userName = req.session.name;
+  console.log("hellooo therer")
+  console.log("userName: ",userName);
 
   res.render('newAccount', { userName });
 });
@@ -260,15 +262,6 @@ app.get('/logout',(req,res) => {
   res.clearCookie('session');
   res.render('login');
 });
-
-// log in
-// app.get('/login/:user_id', (req, res) => {
-//   // set cookie using cookie-session
-//   req.session.user_id = req.params.user_id;
-
-//   // Redirect to home page..TO DO
-//   res.redirect('index');
-// });
 
 
 app.listen(PORT, () => {
