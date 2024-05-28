@@ -8,6 +8,7 @@ const pool = new Pool({
   password: "labber",
   host: "localhost",
   database: "passwordkeepr",
+  port: 5432
 });
 
 // const pool = new Pool({

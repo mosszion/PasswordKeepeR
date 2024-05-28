@@ -160,8 +160,12 @@
     
               <td class="action">
     
-                <button class="edit">Edit</button>
-    
+                <button class="edit" onclick="openEditPage('<%= accounts[parameter].id %>')">Edit</button>
+                <script>
+                function openEditPage(accountID) {
+                  window.location.href = `/edit?accountID=${accountID}`;
+                }
+                </script>
     
               </td>
               <td class="action">

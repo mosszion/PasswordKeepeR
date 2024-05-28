@@ -43,6 +43,7 @@ const { getUserWithEmail } = require('./db/queries/01_get_user_by_email');
 const { addAccountToDatabase } = require('./db/queries/03_add_account_to_db');
 const { selectAccountFromDB } = require('./db/queries/04_select_account');
 const { deleteAccountFromDB } = require('./db/queries/05_delete_account');
+const { editAccountInDB } = require('./db/queries/06_edit_account');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -167,9 +168,49 @@ app.post("/new", (req, res) => {
   });
 });
 
+// Add an endpoint to handle a GET request to :account/edit
+app.get("/edit", (req, res) => {
+  // Store the account ID of the account to be edited
+  const accountID = req.query.accountID;
+
+  const userName = req.session.name;
+
+  res.render("edit", { userName, accountID });
+});
+
+// Add an endpoint to handle a POST to :account/edit
+app.post("/edit", (req, res) => {
+  // Store the account ID of the account to be edited
+  const accountToEditID = req.body.accountID;
+
+  // Store the edited account information
+  const accountName = req.body.accountName;
+  const username = req.body.username;
+  const password = req.body.password;
+  const url = req.body.url;
+  const notes = req.body.notes;
+
+  // Delete account from the db
+  editAccountInDB(accountToEditID, accountName, username, password, url, notes).then((editedAccount) => {
+    console.log(editedAccount);
+
+    res.redirect("/");
+  })
+  .catch((error) => {
+    console.error("Error editing account:", error);
+    res.status(500).send("Internal Server Error");
+  });
+});
+
+app.get('/logout',(req,res) => {
+  req.session = null;
+  res.clearCookie('session');
+  res.render('login');
+});
+
 // Add an endpoint to handle a POST to :account/delete
 app.post("/delete", (req, res) => {
-  // Store the account ID to be deleted
+  // Store the account ID of the account to be deleted
   const accountToDeleteID = req.body.accountID;
 
   // Delete account from the db
@@ -179,7 +220,7 @@ app.post("/delete", (req, res) => {
     res.redirect("/");
   })
   .catch((error) => {
-    console.error("Error during deleting account:", error);
+    console.error("Error deleting account:", error);
     res.status(500).send("Internal Server Error");
   });
 });
