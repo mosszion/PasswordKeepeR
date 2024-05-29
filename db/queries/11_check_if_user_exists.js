@@ -1,11 +1,11 @@
 const pool = require('../connection');
 
 // /**
-//  * Check to see if account exists.
+//  * Check if user already exists.
 //  */
-const doesAccountExist = function(username) {
+const doesUserExist = function(username) {
   const queryString = `
-  SELECT * FROM accounts
+  SELECT * FROM users
   WHERE username = $1;
   `;
 
@@ -13,19 +13,19 @@ const doesAccountExist = function(username) {
     .query(queryString, [username])
     .then((result) => {
       if (result.rows.length > 0) {
-        // console.log("Account exists:", true);
+        // console.log("user exists:", true);
         return true;
       } else {
-        // console.log("Account does not exist:", false);
+        // console.log("user does not exist:", false);
         return false;
       }
     })
     .catch((err) => {
-      console.error("Error checking for account:", err.message); 
+      console.error("Error checking for user:", err.message); 
       throw err; 
     });
 };
 
 module.exports = {
-  doesAccountExist
+  doesUserExist
 };

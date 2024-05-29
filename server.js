@@ -49,6 +49,7 @@ const { selectSingleAccountFromDB } = require('./db/queries/07_select_single_acc
 const { selectOrgAccountsFromDB } = require('./db/queries/08_select_specific_org_accounts');
 const { isUserAdmin } = require('./db/queries/09_is_user_admin');
 const { doesAccountExist } = require('./db/queries/10_check_if_account_exists');
+const { doesUserExist } = require('./db/queries/11_check_if_user_exists');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -361,19 +362,28 @@ app.post("/add_user", (req, res) => {
   
   const organizationID = req.session.organizationID;
 
-  // req.session.username = username;
-
-  // Store the organization id
-  addUserToUsersDatabase(username, email, password, organizationID).then((newUser) => {
-    console.log(newUser);
-
-    res.redirect("/");
-  })
-  .catch((error) => {
-    console.error("Error adding user to organization:", error);
-    res.status(500).send("Internal Server Error");
-  });
-
+  // Check if the user already exists in the database
+  doesUserExist(username)
+    .then((userExists) => {
+      if (userExists) {
+        return res.status(409).send("User already exists.");
+      } else {
+        // Add a new user to the database
+        addUserToUsersDatabase(username, email, password, organizationID)
+          .then((newUser) => {
+            console.log(newUser);
+            res.redirect("/");
+          })
+          .catch((error) => {
+            console.error("Error adding user to organization:", error);
+            res.status(500).send("Internal Server Error");
+          });
+      }
+    })
+    .catch((error) => {
+      console.error("Error checking for user existence:", error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 app.post('/logout',(req,res) => {
