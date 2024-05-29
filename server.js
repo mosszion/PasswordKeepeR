@@ -47,6 +47,7 @@ const { deleteAccountFromDB } = require('./db/queries/05_delete_account');
 const { editAccountInDB } = require('./db/queries/06_edit_account');
 const { selectSingleAccountFromDB } = require('./db/queries/07_select_single_account');
 const { selectOrgAccountsFromDB } = require('./db/queries/08_select_specific_org_accounts');
+const { isUserAdmin } = require('./db/queries/09_is_user_admin');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -72,11 +73,16 @@ app.get('/', (req, res) => {
   // Store session for organization id
   const organizationID = req.session.organizationID;
 
+  // store session for passwordKeepr login username
+  const passwordkeeprUserID = req.session.user_id;
+
   // Selects all accounts that belong to an organization and renders table dynamically
   selectOrgAccountsFromDB(organizationID).then((accounts) => {
     // console.log(accounts);
-
-    res.render('index', {userName, accounts});
+    isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
+      console.log(admin);
+      res.render('index', {userName, accounts});
+    })
   })
   .catch((error) => {
     console.error("Error rendering home page:", error);
@@ -264,6 +270,8 @@ app.post("/add_user", (req, res) => {
   const password = req.body.password;
   
   const organizationID = req.session.organizationID;
+
+  // req.session.username = username;
 
   // Store the organization id
   addUserToUsersDatabase(username, email, password, organizationID).then((newUser) => {
