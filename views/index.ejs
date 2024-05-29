@@ -90,6 +90,8 @@
 
           <th>Password</th>
 
+          <th>Copy Password</th>
+
           <th>Edit</th>
 
           <th>Delete</th>
@@ -106,32 +108,64 @@
             <tr>
 
               <td><%= accounts[parameter].id %></td>
-    
-              <td><%= accounts[parameter].website_url %></td>
-    
+
+              <td><a href="<%= accounts[parameter].website_url %>"> <%= accounts[parameter].website_url %></a></td>
+
               <td><%= accounts[parameter].username %></td>
-    
-              <td><%= accounts[parameter].password %></td>
-    
+
+              <td id="password" ><%= accounts[parameter].password %></td>
+
+              <td><button onclick="myfunction()" class="edit">Copy</button></td>
+
               <td class="action">
-    
+
                 <button class="edit" onclick="openEditPage('<%= accounts[parameter].id %>')">Edit</button>
                 <script>
+                ////////////////////////////////////////////////////////////////////////
+                ///function to copy password to clipboard
+                ///////////////////////////////////////////////////////////////////
+                function myfunction() {
+
+                  const  copyPassword = document.getElementById("password").textContent.trim();
+
+                              // Create a temporary textarea element to copy text
+                        const tempTextarea = document.createElement("textarea");
+                        tempTextarea.value = copyPassword;
+                        document.body.appendChild(tempTextarea);
+
+                        // select the contents of each items
+
+                        tempTextarea.select();
+                        tempTextarea.setSelectionRange(0, 99999);
+
+                        // Copy the selected text
+                        document.execCommand("copy");
+
+                        // Remove the temporary textarea
+                        document.body.removeChild(tempTextarea);
+
+                        alert("copied the text:" + copyPassword);
+
+                      }
+                      ////////////////////////////////////////////////////////////////////////
+                      ///function to fire on Edit button
+                      ///////////////////////////////////////////////////////////////////
+
                 function openEditPage(accountID) {
                   window.location.href = `/edit?accountID=${accountID}`;
                 }
                 </script>
-    
+
               </td>
               <td class="action">
-                
+
                 <form method="POST" action="/delete">
                   <input type="hidden" name="accountID" value="<%= accounts[parameter].id %>">
                   <button class="delete">Delete</button>
                 </form>
 
               </td>
-    
+
             </tr>
           <% } %>
         <% } else { %>

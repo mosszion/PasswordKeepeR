@@ -94,15 +94,40 @@
             <label class="label">Username:</label>
 
             <input type="text" class="input" id="username" name="username" placeholder="Enter Username">
+
             <label class="label">Site password:</label>
 
-            <input type="password" id = "generatedPassword" class="input" id="password" name="password" placeholder="Enter Site password" minlength="12" maxlength="30">
+            <input type="password" id = "generatedPassword" class="input" name="password" placeholder="Enter Site password" minlength="12" maxlength="30">
+            <div class="tooltip" id="tooltip">
+              <p>Password must:</p>
+              <ul>
+                <li>have 12 characters minimum</li>
+                <li>have one uppercase character</li>
+                <li>have one lowercase character</li>
+                <li>have numbers</li>
+                <li>have symbols</li>
+              </ul>
+
+            </div>
             <br/>
             <button type="button" id="generateBtn">Generate</button>
 
 
           <script >
+                    //function for displaying a tooltip
+
+                    const newPasswordInput = document.getElementById('generatedPassword');
+                    const tooltip = document.getElementById('tooltip');
+
+                    newPasswordInput.addEventListener('focus', function() {
+                      tooltip.style.display = 'block';
+                    });
+
+                    newPasswordInput.addEventListener('blur', function() {
+                      tooltip.style.display = 'none';
+                    });
              // define handy variables
+
 
                     const generatePass = function() {
 
