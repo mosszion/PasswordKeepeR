@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
     console.error("Error rendering home page:", error);
     res.status(500).send("Internal Server Error");
   });
-  
+
 });
 
 app.post ('/', (req,res) => {
@@ -146,6 +146,8 @@ app.post("/login", (req, res) => {
 
 app.get('/new', (req, res) => {
   const userName = req.session.name;
+  console.log("hellooo therer")
+  console.log("userName: ",userName);
 
   res.render('newAccount', { userName });
 });
