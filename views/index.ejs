@@ -111,7 +111,9 @@
           <% for (let parameter in accounts) { %>
             <tr>
 
-              <td><%= accounts[parameter].id %></td>
+              <%const index = Number(parameter)%>
+
+              <td><%= index + 1 %></td>
 
               <td><a href="<%= accounts[parameter].website_url %>"> <%= accounts[parameter].website_url %></a></td>
 
