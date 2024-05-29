@@ -14,7 +14,7 @@ const addAccountToDatabase = function(accountName, username, password, websiteUR
   return pool
   .query(queryString, queryParams)
   .then((result) => {
-    console.log("Account added:", result.rows[0]);
+    // console.log("Account added:", result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {

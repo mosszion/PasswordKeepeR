@@ -12,7 +12,7 @@ const selectOrgAccountsFromDB = function(organizationID) {
   return pool
   .query(queryString, [organizationID])
   .then((result) => {
-    console.log("Selected account:", result.rows);
+    // console.log("Selected account:", result.rows);
     return result.rows;
   })
   .catch((err) => {

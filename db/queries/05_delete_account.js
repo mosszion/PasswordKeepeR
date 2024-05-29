@@ -13,7 +13,7 @@ const deleteAccountFromDB = function(accountID) {
   return pool
   .query(queryString, [accountID])
   .then((result) => {
-    console.log("Deleted account:", result.rows);
+    // console.log("Deleted account:", result.rows);
     return result.rows[0];
   })
   .catch((err) => {

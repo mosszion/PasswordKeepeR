@@ -10,10 +10,10 @@ const isUserAdmin = function(userID, organizationID) {
   .query(queryString, [userID, organizationID])
   .then((result) => {
     if (result.rows.length > 0) {
-      console.log("User is an admin:", true);
+      // console.log("User is an admin:", true);
       return true;
     } else {
-      console.log("User is not an admin:", false);
+      // console.log("User is not an admin:", false);
       return false;
     }
   })

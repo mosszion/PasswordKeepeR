@@ -9,7 +9,7 @@ const selectAccountFromDB = function() {
   return pool
   .query(queryString)
   .then((result) => {
-    console.log("Selected account:", result.rows);
+    // console.log("Selected account:", result.rows);
     return result.rows;
   })
   .catch((err) => {

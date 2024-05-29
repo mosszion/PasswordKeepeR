@@ -12,7 +12,7 @@ const selectSingleAccountFromDB = function(accountID) {
   return pool
   .query(queryString, [accountID])
   .then((result) => {
-    console.log("Selected account:", result.rows);
+    // console.log("Selected account:", result.rows);
     return result.rows[0];
   })
   .catch((err) => {

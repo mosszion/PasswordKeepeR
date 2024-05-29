@@ -281,7 +281,7 @@ app.get("/edit", (req, res) => {
 
       isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
         selectSingleAccountFromDB(accountID).then((accountInfo) => {
-          console.log(accountInfo);
+          // console.log(accountInfo);
           res.render("edit", { userName, accountID, accountInfo, admin });
         }).catch((error) => {
           console.error("Error fetching account info:", error);
@@ -312,7 +312,7 @@ app.post("/edit", (req, res) => {
 
   // Delete account from the db
   editAccountInDB(accountID, accountName, username, password, url, notes).then((editedAccount) => {
-    console.log(editedAccount);
+    // console.log(editedAccount);
 
     res.redirect("/");
   })
@@ -371,7 +371,7 @@ app.post("/add_user", (req, res) => {
         // Add a new user to the database
         addUserToUsersDatabase(username, email, password, organizationID)
           .then((newUser) => {
-            console.log(newUser);
+            // console.log(newUser);
             res.redirect("/");
           })
           .catch((error) => {

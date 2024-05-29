@@ -7,7 +7,7 @@ const editAccountInDB = function(accountID, accountName, username, password, url
   // Store account info in array
   let accountInfoArr = [accountID, accountName, username, password, url, notes];
 
-  console.log(accountInfoArr);
+  // console.log(accountInfoArr);
 
   const queryString = `
   UPDATE accounts
@@ -24,7 +24,7 @@ const editAccountInDB = function(accountID, accountName, username, password, url
   return pool
   .query(queryString, accountInfoArr)
   .then((result) => {
-    console.log("Edited account:", result.rows[0]);
+    // console.log("Edited account:", result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
