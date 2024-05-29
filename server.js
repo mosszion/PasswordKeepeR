@@ -76,17 +76,22 @@ app.get('/', (req, res) => {
   // store session for passwordKeepr login username
   const passwordkeeprUserID = req.session.user_id;
 
-  // Selects all accounts that belong to an organization and renders table dynamically
-  selectOrgAccountsFromDB(organizationID).then((accounts) => {
-    // console.log(accounts);
-    isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
-      res.render('index', {userName, accounts, admin});
+  if (!passwordkeeprUserID) {
+    res.redirect("/login");
+  } else {
+
+    // Selects all accounts that belong to an organization and renders table dynamically
+    selectOrgAccountsFromDB(organizationID).then((accounts) => {
+      // console.log(accounts);
+      isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
+        res.render('index', {userName, accounts, admin});
+      })
     })
-  })
-  .catch((error) => {
-    console.error("Error rendering home page:", error);
-    res.status(500).send("Internal Server Error");
-  });
+    .catch((error) => {
+      console.error("Error rendering home page:", error);
+      res.status(500).send("Internal Server Error");
+    });
+  }
 
 });
 
@@ -153,28 +158,36 @@ app.get('/new', (req, res) => {
   const userName = req.session.name;
   const email = req.session.email;
 
-  // If the email doesn't exist then return error status
-  if (!email) {
-    return res.status(403).send("User email not found.");
-  }
+  // store session for passwordKeepr login username
+  const passwordkeeprUserID = req.session.user_id;
 
-  getUserWithEmail(email).then((user) => {
-    // If the user doesn't exist for the email then return error status
-    if (!user) {
-      return res.status(404).send("User not found with the provided email");
+  if (!passwordkeeprUserID) {
+    res.redirect("/login");
+  } else {
+
+    // If the email doesn't exist then return error status
+    if (!email) {
+      return res.status(403).send("User email not found.");
     }
 
-    const organizationID = user.organization_id;
-    const passwordkeeprUserID = req.session.user_id;
+    getUserWithEmail(email).then((user) => {
+      // If the user doesn't exist for the email then return error status
+      if (!user) {
+        return res.status(404).send("User not found with the provided email");
+      }
 
-    isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
-      res.render('newAccount', { userName, admin });
-    })
+      const organizationID = user.organization_id;
+      const passwordkeeprUserID = req.session.user_id;
 
-  }).catch((error) => {
-    console.error("Error creating new account:", error);
-    res.status(500).send("Internal Server Error");
-  });
+      isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
+        res.render('newAccount', { userName, admin });
+      })
+
+    }).catch((error) => {
+      console.error("Error creating new account:", error);
+      res.status(500).send("Internal Server Error");
+    });
+  }
 });
 
 // Add an endpoint to handle a POST to /new
@@ -225,39 +238,47 @@ app.get("/edit", (req, res) => {
   const userName = req.session.name;
   const email = req.session.email;
 
-  // If the email doesn't exist then return error status
-  if (!email) {
-    return res.status(403).send("User email not found.");
-  }
+  // store session for passwordKeepr login username
+  const passwordkeeprUserID = req.session.user_id;
 
-  // Store the account ID of the account to be edited
-  const accountID = req.query.accountID;
+  if (!passwordkeeprUserID) {
+    res.redirect("/login");
+  } else {
 
-  getUserWithEmail(email).then((user) => {
-    // If the user doesn't exist for the email then return error status
-    if (!user) {
-      return res.status(404).send("User not found with the provided email");
+    // If the email doesn't exist then return error status
+    if (!email) {
+      return res.status(403).send("User email not found.");
     }
 
-    const organizationID = user.organization_id;
-    const passwordkeeprUserID = req.session.user_id;
+    // Store the account ID of the account to be edited
+    const accountID = req.query.accountID;
 
-    isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
-      selectSingleAccountFromDB(accountID).then((accountInfo) => {
-        console.log(accountInfo);
-        res.render("edit", { userName, accountID, accountInfo, admin });
+    getUserWithEmail(email).then((user) => {
+      // If the user doesn't exist for the email then return error status
+      if (!user) {
+        return res.status(404).send("User not found with the provided email");
+      }
+
+      const organizationID = user.organization_id;
+      const passwordkeeprUserID = req.session.user_id;
+
+      isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
+        selectSingleAccountFromDB(accountID).then((accountInfo) => {
+          console.log(accountInfo);
+          res.render("edit", { userName, accountID, accountInfo, admin });
+        }).catch((error) => {
+          console.error("Error fetching account info:", error);
+          res.status(500).send("Internal Server Error");
+        });
       }).catch((error) => {
-        console.error("Error fetching account info:", error);
+        console.error("Error checking admin status:", error);
         res.status(500).send("Internal Server Error");
       });
     }).catch((error) => {
-      console.error("Error checking admin status:", error);
+      console.error("Error finding user:", error);
       res.status(500).send("Internal Server Error");
     });
-  }).catch((error) => {
-    console.error("Error finding user:", error);
-    res.status(500).send("Internal Server Error");
-  });
+  }
 });
 
 // Add an endpoint to handle a POST to :account/edit
@@ -303,9 +324,16 @@ app.post("/delete", (req, res) => {
 
 // Add an endpoint ot handle GET to add_user
 app.get('/add_user', (req, res) => {
+  // store session for passwordKeepr login username
+  const passwordkeeprUserID = req.session.user_id;
   const userName = req.session.name;
 
-  res.render('add_user', { userName });
+  if (!passwordkeeprUserID) {
+    res.redirect("/login");
+  } else {
+    res.render('add_user', { userName });
+  }
+
 });
 
 // Add an endpoint to handle a POST to /add_user
