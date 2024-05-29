@@ -180,14 +180,14 @@
           <label class="label">Notes:</label>
 
           <textarea class="input" id="notes" name="notes" placeholder="Enter Notes"></textarea>
-          <button class="button cancel" onclick="clearInp">Cancel</button>
+          <button class="button cancel" type="button" onclick="clearInp()">Cancel</button>
 
           <button class="button" type = "submit">Save</button>
           </form>
 
           <script>
           // clear inputs after refresh
-          function clearInp () {
+          function clearInp() {
           document.getElementById('myform').reset();
           }
           </script>
