@@ -332,10 +332,11 @@ app.post("/add_user", (req, res) => {
 
 });
 
-app.get('/logout',(req,res) => {
+app.post('/logout',(req,res) => {
   req.session = null;
   res.clearCookie('session');
-  res.render('login');
+  // res.render('login');
+  res.redirect('/login');
 });
 
 app.listen(PORT, () => {
