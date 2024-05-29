@@ -71,30 +71,34 @@ app.use('/routes', routes);
 
 app.get('/', (req, res) => {
   const userName = req.session.name;
-
-  // Store session for organization id
   const organizationID = req.session.organizationID;
-
-  // store session for passwordKeepr login username
   const passwordkeeprUserID = req.session.user_id;
+  const category = req.session.category;
 
   if (!passwordkeeprUserID) {
     res.redirect("/login");
   } else {
-
-    // Selects all accounts that belong to an organization and renders table dynamically
-    selectOrgAccountsFromDB(organizationID).then((accounts) => {
-      // console.log(accounts);
-      isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
-        res.render('index', {userName, accounts, admin});
+    selectOrgAccountsFromDB(organizationID)
+      .then((accounts) => {
+        isUserAdmin(passwordkeeprUserID, organizationID)
+          .then((admin) => {
+            // Add category to each account object in the accounts array
+            const accountsWithCategory = accounts.map(account => ({
+              ...account,
+              category: category
+            }));
+            res.render('index', { userName, accounts: accountsWithCategory, admin });
+          })
+          .catch((error) => {
+            console.error("Error checking admin status:", error);
+            res.status(500).send("Internal Server Error");
+          });
       })
-    })
-    .catch((error) => {
-      console.error("Error rendering home page:", error);
-      res.status(500).send("Internal Server Error");
-    });
+      .catch((error) => {
+        console.error("Error fetching accounts:", error);
+        res.status(500).send("Internal Server Error");
+      });
   }
-
 });
 
 app.post ('/', (req,res) => {
@@ -200,6 +204,14 @@ app.post("/new", (req, res) => {
   const password = req.body.password;
   const url = req.body.url;
   const notes = req.body.notes;
+
+  // Store the account category
+  const category = req.body.category;
+
+  // Set session cookie for category
+  req.session.category = category
+
+  // console.log(category);
 
   // Store the user email
   const email = req.session.email;
@@ -309,6 +321,12 @@ app.post("/edit", (req, res) => {
   password = req.body.password;
   url = req.body.url;
   notes = req.body.notes;
+
+  // Store the account category
+  const category = req.body.category;
+
+  // Set session cookie for category
+  req.session.category = category
 
   // Delete account from the db
   editAccountInDB(accountID, accountName, username, password, url, notes).then((editedAccount) => {
