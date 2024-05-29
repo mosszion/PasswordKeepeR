@@ -48,6 +48,7 @@ const { editAccountInDB } = require('./db/queries/06_edit_account');
 const { selectSingleAccountFromDB } = require('./db/queries/07_select_single_account');
 const { selectOrgAccountsFromDB } = require('./db/queries/08_select_specific_org_accounts');
 const { isUserAdmin } = require('./db/queries/09_is_user_admin');
+const { doesAccountExist } = require('./db/queries/10_check_if_account_exists');
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
@@ -202,35 +203,50 @@ app.post("/new", (req, res) => {
   // Store the user email
   const email = req.session.email;
 
-  // If the email doesn't exist then return error staus
+  // If the email doesn't exist then return error status
   if (!email) {
     return res.status(403).send("User email not found.");
   }
 
   // Store the organization id
-  getUserWithEmail(email).then((user) => {
-    // If the user doesn't exists for the email then return error status
-    if (!user) {
-      return res.status(404).send("User not found with the provided email");
-    }
+  getUserWithEmail(email)
+    .then((user) => {
+      // If the user doesn't exist for the email then return error status
+      if (!user) {
+        return res.status(404).send("User not found with the provided email");
+      }
 
-    const organizationID = user.organization_id;
+      const organizationID = user.organization_id;
 
-    // store organization session
-    req.session.organizationID = organizationID;
+      // store organization session
+      req.session.organizationID = organizationID;
 
-    // Add a new account to the db
-    addAccountToDatabase(accountName, username, password, url, notes, organizationID).then((account) => {
-    // console.log(account);
-
-      res.redirect("/");
+      // Check if the account already exists in the database
+      doesAccountExist(username)
+        .then((accountExists) => {
+          if (accountExists) {
+            return res.status(409).send("Account username already exists.");
+          } else {
+            // Add a new account to the db
+            addAccountToDatabase(accountName, username, password, url, notes, organizationID)
+              .then((account) => {
+                res.redirect("/");
+              })
+              .catch((error) => {
+                console.error("Error during adding account:", error);
+                res.status(500).send("Internal Server Error");
+              });
+          }
+        })
+        .catch((error) => {
+          console.error("Error checking for account existence:", error);
+          res.status(500).send("Internal Server Error");
+        });
     })
-  })
-  .catch((error) => {
-    console.error("Error during adding account:", error);
-    res.status(500).send("Internal Server Error");
-  });
-
+    .catch((error) => {
+      console.error("Error retrieving user information:", error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 // Add an endpoint to handle a GET request to :account/edit

@@ -1,31 +1,5 @@
 const pool = require('../connection');
 
-// /**
-//  * Determin if the user is an admin for their org.
-//  */
-// const isUserAdmin = function(organizationID, userID) {
-//   const queryString = `
-//   SELECT * FROM organizations
-//   JOIN users ON organization_id = organizations.id
-//   WHERE $1 = organization_id;
-//   `;
-
-//   return pool
-//   .query(queryString, [organizationID])
-//   .then((result) => {
-//     console.log("User Admin:", result.rows);
-//     return result.rows;
-//   })
-//   .catch((err) => {
-//     console.error("Error finding user:", err.message); 
-//     throw err; 
-//   });
-// };
-
-// module.exports = {
-//   isUserAdmin
-// };
-
 const isUserAdmin = function(userID, organizationID) {
   const queryString = `
   SELECT * FROM organizations
