@@ -40,7 +40,7 @@ app.use(cookieSession({
 
 // Import the database functions
 const { getUserWithEmail } = require('./db/queries/01_get_user_by_email');
-const { addUserToUsersDatabase } = require('./db/queries/02_assign_user_to_org');
+const { addUserToUsersDatabase } = require('./db/queries/02_add_user_to_users_db');
 const { addAccountToDatabase } = require('./db/queries/03_add_account_to_db');
 const { selectAccountFromDB } = require('./db/queries/04_select_account');
 const { deleteAccountFromDB } = require('./db/queries/05_delete_account');
@@ -146,8 +146,6 @@ app.post("/login", (req, res) => {
 
 app.get('/new', (req, res) => {
   const userName = req.session.name;
-  console.log("hellooo therer")
-  console.log("userName: ",userName);
 
   res.render('newAccount', { userName });
 });
@@ -249,6 +247,35 @@ app.post("/delete", (req, res) => {
     console.error("Error deleting account:", error);
     res.status(500).send("Internal Server Error");
   });
+});
+
+// Add an endpoint ot handle GET to add_user
+app.get('/add_user', (req, res) => {
+  const userName = req.session.name;
+
+  res.render('add_user', { userName });
+});
+
+// Add an endpoint to handle a POST to /add_user
+app.post("/add_user", (req, res) => {
+  // Store the new account information
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+  
+  const organizationID = req.session.organizationID;
+
+  // Store the organization id
+  addUserToUsersDatabase(username, email, password, organizationID).then((newUser) => {
+    console.log(newUser);
+
+    res.redirect("/");
+  })
+  .catch((error) => {
+    console.error("Error adding user to organization:", error);
+    res.status(500).send("Internal Server Error");
+  });
+
 });
 
 app.get('/logout',(req,res) => {

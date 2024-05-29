@@ -10,13 +10,13 @@ const addUserToUsersDatabase = function(username, email, password, organization_
   `;
 
   return pool
-  .query(queryString, [email])
+  .query(queryString, [username, email, password, organization_id])
   .then((result) => {
-    console.log(result.rows[0]);
+    // console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.error("Error adding :", err.message); 
+    console.error("Error adding user to users database:", err.message); 
     throw err; 
   });
 };
