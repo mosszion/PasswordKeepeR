@@ -32,8 +32,9 @@
       <li><button><i class="fas fa-lock"></i> Passwords</button></li>
       <li><button><i class="fas fa-search"></i> Browse</button></li>
       <li><a href="/new" ><button><i class="fas fa-add"></i> Add Account</button></a></li>
-      <li><a href="/add_user" ><button><i class="fas fa-add"></i> Add User</button></a></li>
-
+      <% if (admin) { %>
+        <li><a href="/add_user" ><button><i class="fas fa-add"></i> Add User</button></a></li>
+      <% } %>
       <li></li>
 
       <li></li>

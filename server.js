@@ -80,8 +80,8 @@ app.get('/', (req, res) => {
   selectOrgAccountsFromDB(organizationID).then((accounts) => {
     // console.log(accounts);
     isUserAdmin(passwordkeeprUserID, organizationID).then((admin) => {
-      console.log(admin);
-      res.render('index', {userName, accounts});
+      // console.log(admin);
+      res.render('index', {userName, accounts, admin});
     })
   })
   .catch((error) => {
