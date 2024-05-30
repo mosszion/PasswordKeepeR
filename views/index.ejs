@@ -124,7 +124,7 @@
 
             <td id="password"><%= accounts[parameter].password %></td>
 
-            <td><button onclick="copyPasswordToClipboard()" class="edit">Copy</button></td>
+            <td><button onclick="copyPasswordToClipboard('<%= accounts[parameter].password %>')" class="edit">Copy</button></td>
 
             <td class="action">
               <button
@@ -137,14 +137,14 @@
                 ////////////////////////////////////////////////////////////////////////
                 ///function to copy password to clipboard
                 ///////////////////////////////////////////////////////////////////
-                function copyPasswordToClipboard() {
-                  const copyPassword = document
-                    .getElementById("password")
-                    .textContent.trim();
+                function copyPasswordToClipboard(passValue) {
+                  // const copyPassword = document
+                  //   .getElementById("password")
+                  //   .textContent.trim();
 
                   // Create a temporary textarea element to copy text
                   const tempTextarea = document.createElement("textarea");
-                  tempTextarea.value = copyPassword;
+                  tempTextarea.value = passValue;
                   document.body.appendChild(tempTextarea);
 
                   // select the contents of each items
@@ -158,7 +158,7 @@
                   // Remove the temporary textarea
                   document.body.removeChild(tempTextarea);
 
-                  alert("copied the text:" + copyPassword);
+                  alert("copied the text:" + passValue);
                 }
                 ////////////////////////////////////////////////////////////////////////
                 ///function to fire on Edit button
