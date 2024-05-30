@@ -1,6 +1,6 @@
 // PG database client/connection setup
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
+const { Pool } = require("pg");
+const dotenv = require("dotenv");
 dotenv.config();
 
 const pool = new Pool({
@@ -8,7 +8,7 @@ const pool = new Pool({
   password: "labber",
   host: "localhost",
   database: "passwordkeepr",
-  port: 5432
+  port: 5432,
 });
 
 // const pool = new Pool({
@@ -22,4 +22,3 @@ const pool = new Pool({
 pool.connect();
 
 module.exports = pool;
-

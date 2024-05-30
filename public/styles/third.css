@@ -1,5 +1,4 @@
 body {
-
   font-family: sans-serif;
 
   margin: 0;
@@ -7,12 +6,9 @@ body {
   padding: 0;
 
   background-color: #f2f2f2;
-
 }
 
-
 .container {
-
   width: 500px;
 
   margin: 50px auto;
@@ -24,42 +20,29 @@ body {
   border-radius: 5px;
 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
 }
 
-
 h2#addPassword {
-
-
   text-align: center;
 
   margin-bottom: 20px;
 
   color: #333;
-
 }
-
 
 .form-group {
-
   margin-bottom: 20px;
-
 }
 
-
 .label {
-
   display: block;
 
   margin-bottom: 5px;
 
   font-weight: bold;
-
 }
 
-
 .input {
-
   width: 100%;
 
   padding: 10px;
@@ -69,15 +52,12 @@ h2#addPassword {
   border-radius: 3px;
 
   box-sizing: border-box;
-
 }
 
-
 .button {
-
   padding: 10px 20px;
 
-  background-color: #4CAF50;
+  background-color: #4caf50;
 
   color: white;
 
@@ -86,33 +66,21 @@ h2#addPassword {
   border-radius: 3px;
 
   cursor: pointer;
-
 }
-
 
 .button:hover {
-
   background-color: #45a049;
-
 }
-
 
 .cancel {
-
   background-color: #ff0000;
-
 }
-
 
 .cancel:hover {
-
   background-color: #ff0000;
-
 }
 
-
 .headerPass {
-
   background-color: #ff0000;
 
   color: #252839;
@@ -121,12 +89,8 @@ h2#addPassword {
 
   text-align: center;
   margin-bottom: 20px;
-
 }
 
-
 .headerPass h2 {
-
   margin: 0;
-
 }

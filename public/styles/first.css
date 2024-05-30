@@ -1,16 +1,12 @@
 body {
-
   font-family: sans-serif;
 
   background-color: #f2f2f2;
 
   display: flex;
-
 }
 
-
 .sidebar {
-
   background-color: #777;
 
   color: #fff;
@@ -20,44 +16,29 @@ body {
   width: 200px;
 
   padding: 20px;
-
 }
-
 
 .sidebar h3 {
-
   margin-top: 0;
-
 }
 
-
 .sidebar ul {
-
   list-style: none;
 
   padding: 0;
-
 }
-
 
 .sidebar li {
-
   padding: 10px 0;
-
 }
 
-
 .content {
-
   flex: 1;
 
   padding: 20px;
-
 }
 
-
 .header {
-
   background-color: #ff0000;
 
   color: #fff;
@@ -69,42 +50,27 @@ body {
   align-items: center;
 
   justify-content: space-between;
-
 }
-
 
 .header h1 {
-
   margin: 0;
-
 }
-
 
 .header .logo {
-
   font-size: 24px;
-
 }
-
 
 .header .logo span {
-
   font-size: 16px;
-
 }
 
-
 .header .search {
-
   flex: 1;
 
   margin: 0 20px;
-
 }
 
-
 .header .search input {
-
   width: 100%;
 
   padding: 10px;
@@ -112,12 +78,9 @@ body {
   border: 1px solid #ccc;
 
   border-radius: 5px;
-
 }
 
-
 .header .add {
-
   background-color: #fff;
 
   color: #ff0000;
@@ -129,48 +92,34 @@ body {
   border-radius: 5px;
 
   cursor: pointer;
-
 }
 
-
 .table {
-
   width: 100%;
 
   border-collapse: collapse;
 
   margin-top: 20px;
-
 }
 
-
-.table th, .table td {
-  
+.table th,
+.table td {
   text-align: left;
 
   padding: 10px;
 
   border: 1px solid #ccc;
-
 }
-
 
 .table th {
-
   background-color: #f2f2f2;
-
 }
-
 
 .table .action {
-
   text-align: center;
-
 }
 
-
 .table .action button {
-
   background-color: #fff;
 
   color: #ff0000;
@@ -184,14 +133,10 @@ body {
   cursor: pointer;
 
   margin: 0 5px;
-
 }
 
-
 .table .action button:hover {
-
   background-color: #ff0000;
 
   color: #fff;
-
 }
