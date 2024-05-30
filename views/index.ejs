@@ -114,11 +114,11 @@
               <%const index = Number(parameter)%>
 
               <!-- Colors for categories -->
-              <td style="color: <%= accounts[parameter].category === 'social' ? 'red' : (accounts[parameter].category === 'work' ? 'green' : 'blue') %>"><%= index + 1 %></td>
+              <td ><%= index + 1 %></td>
 
               <td><a href="<%= accounts[parameter].website_url %>"> <%= accounts[parameter].website_url %></a></td>
 
-              <td><%= accounts[parameter].username %></td>
+              <td ><%= accounts[parameter].username %></td>
 
               <td id="password" ><%= accounts[parameter].password %></td>
 
