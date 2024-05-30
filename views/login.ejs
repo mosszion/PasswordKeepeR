@@ -1,35 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Login</title>
 
-<head>
-  <title>Login</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
+    <!-- <link rel="stylesheet" href="/styles/layout.css" /> -->
+    <link rel="stylesheet" href="/styles/login.css" />
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <!-- <link rel="stylesheet" href="/styles/main.css" /> -->
-  <!-- <link rel="stylesheet" href="/styles/layout.css" /> -->
-  <link rel="stylesheet" href="/styles/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/users.js"></script>
+  </head>
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/users.js"></script>
-</head>
-
-<body>
+  <body>
     <!-- Insert logo -->
-    <h1 class="passwordkeepr-logo">PasswordKeepR <span class="logo"><i class="fa-sharp fa-solid fa-key fa-flip-horizontal" style="color: #000000;"></i></i></span></h1>
+    <h1 class="passwordkeepr-logo">
+      PasswordKeepR
+      <span class="logo"
+        ><i
+          class="fa-sharp fa-solid fa-key fa-flip-horizontal"
+          style="color: #000000"
+        ></i
+      ></span>
+    </h1>
 
     <div class="login">
       <div class="login-or-create-account">
         <h2 class="login-text">Log In</h2>
         <span class="create-account">
           or
-          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">create an account</a>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            >create an account</a
+          >
         </span>
       </div>
 
@@ -59,11 +74,9 @@
         </div>
         <!-- Separate container for the button -->
         <div class="button-container">
-
           <button type="submit" class="login-btn">Log In</button>
         </div>
       </form>
     </div>
-</body>
-
+  </body>
 </html>
