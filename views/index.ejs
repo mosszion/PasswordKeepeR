@@ -124,7 +124,7 @@
 
             <td id="password"><%= accounts[parameter].password %></td>
 
-            <td><button onclick="myfunction()" class="edit">Copy</button></td>
+            <td><button onclick="copyPasswordToClipboard()" class="edit">Copy</button></td>
 
             <td class="action">
               <button
@@ -137,7 +137,7 @@
                 ////////////////////////////////////////////////////////////////////////
                 ///function to copy password to clipboard
                 ///////////////////////////////////////////////////////////////////
-                function myfunction() {
+                function copyPasswordToClipboard() {
                   const copyPassword = document
                     .getElementById("password")
                     .textContent.trim();
