@@ -1,211 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Home Page</title>
 
-<head>
-  <title>Home Page</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
-
-  <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" /> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="/styles/first.css" />
-  <link rel="stylesheet" href="/styles/third.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/styles/first.css" />
+    <link rel="stylesheet" href="/styles/third.css" />
 
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+    <script src="/public/scripts/pass3.js"></script>
+  </head>
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-  <script src="/public/scripts/pass3.js"></script>
-</head>
+  <body>
+    <sidebar class="sidebar">
+      <h2 style="color: black">Discover</h2>
 
-<body>
+      <ul>
+        <li>
+          <a href="/"
+            ><button><i class="fas fa-home"></i> Home</button></a
+          >
+        </li>
+        <li>
+          <button><i class="fas fa-lock"></i> Passwords</button>
+        </li>
+        <li>
+          <button><i class="fas fa-search"></i> Browse</button>
+        </li>
+        <li>
+          <a href="/new"
+            ><button><i class="fas fa-add"></i> Add Account</button></a
+          >
+        </li>
+        <% if (admin) { %>
+        <li>
+          <a href="/add_user"
+            ><button><i class="fas fa-add"></i> Add User</button></a
+          >
+        </li>
+        <% } %>
+        <li></li>
 
+        <li></li>
+      </ul>
+    </sidebar>
 
-  <sidebar class="sidebar">
-    <h2 style="color: black;">Discover</h2>
+    <div class="content">
+      <div class="header">
+        <h1>
+          PasswordKeepR
+          <span class="logo"
+            ><i
+              class="fa-sharp fa-solid fa-key fa-flip-horizontal"
+              style="color: #000000"
+            ></i
+          ></span>
+        </h1>
 
-    <ul>
+        <div class="actions">
+          <div class="dropdown">
+            <p class="dropbtn">Welcome: <%= userName %></p>
 
-      <li><a href="/" ><button><i class="fas fa-home"></i> Home</button></a></li>
-      <li><button><i class="fas fa-lock"></i> Passwords</button></li>
-      <li><button><i class="fas fa-search"></i> Browse</button></li>
-      <li><a href="/new" ><button><i class="fas fa-add"></i> Add Account</button></a></li>
-      <% if (admin) { %>
-        <li><a href="/add_user" ><button><i class="fas fa-add"></i> Add User</button></a></li>
-      <% } %>
-      <li></li>
+            <div class="dropdown-content">
+              <form action="/logout" method="POST">
+                <button type="submit" class="btn btn-primary">Logout</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
 
-      <li></li>
+        <div class="container">
+          <div class="headerPass">
+            <h2 i>Add/Edit Account</h2>
+          </div>
+          <div class="form-group">
+            <form id="myform" action="/new" method="POST">
+              <label class="label">URL:</label>
 
-    </ul>
+              <input
+                type="text"
+                class="input"
+                id="url"
+                name="url"
+                placeholder="Enter URL"
+              />
 
-  </sidebar>
+              <label class="label">Name:</label>
 
+              <input
+                type="text"
+                class="input"
+                id="accountName"
+                name="accountName"
+                placeholder="Enter Name"
+              />
 
+              <label class="label">Username:</label>
 
+              <input
+                type="text"
+                class="input"
+                id="username"
+                name="username"
+                placeholder="Enter Username"
+              />
 
-  <div class="content">
+              <!-- list for category -->
+              <label class="label">Category:</label>
+              <select class="input" id="category" name="category">
+                <option value="social">Social</option>
+                <option value="work">Work Related</option>
+                <option value="entertainment">Entertainment</option>
+              </select>
 
-    <div class="header">
+              <label class="label">Site password:</label>
 
-      <h1>PasswordKeepR <span class="logo"><i class="fa-sharp fa-solid fa-key fa-flip-horizontal" style="color: #000000;"></i></i></span></h1>
+              <input
+                type="text"
+                id="generatedPassword"
+                class="input"
+                name="password"
+                placeholder="Enter Site password"
+                minlength="12"
+                maxlength="30"
+              />
+              <div class="tooltip" id="tooltip">
+                <div>
+                  <p>🚨Check boxes to get generated Password !!!🚨</p>
+                </div>
+                <div>
+                  <label for="length">Password Length:</label>
+                  <input
+                    type="number"
+                    id="length"
 
-      <div class="actions">
+                    min="6"
+                    max="20"
+                    value="10"
+                  />
+                </div>
+                <div>
+                  <label for="includeLowerCase"
+                    >Include Lowercase Letters:</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="includeLowerCase"
 
-             <div class="dropdown">
+                  />
+                </div>
+                <div>
+                  <label for="includeUpperCase"
+                    >Include Uppercase Letters:</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="includeUpperCase"
 
-          <p class="dropbtn">Welcome: <%= userName %> </p>
+                  />
+                </div>
+                <div>
+                  <label for="includeNumbers">Include Numbers:</label>
+                  <input
+                    type="checkbox"
+                    id="includeNumbers"
 
-          <div class="dropdown-content">
+                  />
+                </div>
+                <div>
+                  <label for="includeSymbols">Include Symbols:</label>
+                  <input
+                    type="checkbox"
+                    id="includeSymbols"
 
-            <form action="/logout" method="POST">
-              <button type="submit" class="btn btn-primary">Logout</button>
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  id="generateBtn"
+                  onclick="generatePassword()"
+                >
+                  Generate Password
+                </button>
+              </div>
+
+              <script>
+                //function for displaying a tooltip
+
+                const newPasswordInput =
+                  document.getElementById("generatedPassword");
+                const tooltip = document.getElementById("tooltip");
+
+                newPasswordInput.addEventListener("focus", function () {
+                  tooltip.style.display = "block";
+                });
+
+                // newPasswordInput.addEventListener("blur", function () {
+                //   tooltip.style.display = "none";
+                // });
+                // define handy variables
+
+                function generatePassword() {
+                  const length = parseInt(
+                    document.getElementById("length").value
+                  );
+                  const includeLowerCase =
+                    document.getElementById("includeLowerCase").checked;
+                  const includeUpperCase =
+                    document.getElementById("includeUpperCase").checked;
+                  const includeNumbers =
+                    document.getElementById("includeNumbers").checked;
+                  const includeSymbols =
+                    document.getElementById("includeSymbols").checked;
+                  let charset = "";
+                  if (includeLowerCase) charset += "abcdefghijklmnopqrstuvwxyz";
+                  if (includeUpperCase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                  if (includeNumbers) charset += "0123456789";
+                  if (includeSymbols) charset += "!@#$%^&*()-_=+";
+
+                  let password = "";
+                  for (let i = 0; i < length; i++) {
+                    const randomIndex = Math.floor(
+                      Math.random() * charset.length
+                    );
+                    password += charset.charAt(randomIndex);
+                  }
+                  return password;
+                }
+                // get the field in the html file to update
+                const updateField = function () {
+                  const passwordField =
+                    document.getElementById("generatedPassword");
+                  const generatefn = generatePassword();
+                  passwordField.value = generatefn;
+                };
+                // listen to button click
+                const button = document.getElementById("generateBtn");
+                button.addEventListener("click", updateField);
+
+                // clear inputs after refresh
+                function clearInp() {
+                  document.getElementById("generatedPassword").value = "";
+                }
+              </script>
+              <label class="label">Notes:</label>
+
+              <textarea
+                class="input"
+                id="notes"
+                name="notes"
+                placeholder="Enter Notes"
+              ></textarea>
+              <button class="button cancel" type="button" onclick="clearInp()">
+                Cancel
+              </button>
+
+              <button class="button" type="submit">Save</button>
             </form>
 
+            <script>
+              // clear inputs after refresh
+              function clearInp() {
+                document.getElementById("myform").reset();
+              }
+            </script>
           </div>
-
         </div>
-
       </div>
-
     </div>
-    <div>
-      <div class="header">
-
-        <h2 id="addPassword">Add password</h2>
-
-      </div>
-
-
-      <div class="container">
-
-
-        <div class="form-group">
-          <form id = 'myform' action="/new" method="POST">
-
-            <label class="label">URL:</label>
-
-            <input type="text" class="input" id="url" name="url" placeholder="Enter URL">
-
-            <label class="label">Name:</label>
-
-            <input type="text" class="input" id="accountName" name="accountName" placeholder="Enter Name">
-
-            <label class="label">Username:</label>
-
-            <input type="text" class="input" id="username" name="username" placeholder="Enter Username">
-
-            <!-- list for category -->
-            <label class="label">Category:</label>
-            <select class="input" id="category" name="category">
-              <option value="social">Social</option>
-              <option value="work">Work Related</option>
-              <option value="entertainment">Entertainment</option>
-            </select>
-
-            <label class="label">Site password:</label>
-
-            <input type="password" id = "generatedPassword" class="input" name="password" placeholder="Enter Site password" minlength="12" maxlength="30">
-            <div class="tooltip" id="tooltip">
-              <p>Password must:</p>
-              <ul>
-                <li>have 12 characters minimum</li>
-                <li>have one uppercase character</li>
-                <li>have one lowercase character</li>
-                <li>have numbers</li>
-                <li>have symbols</li>
-              </ul>
-
-            </div>
-            <br/>
-            <button type="button" id="generateBtn">Generate</button>
-
-
-          <script >
-                    //function for displaying a tooltip
-
-                    const newPasswordInput = document.getElementById('generatedPassword');
-                    const tooltip = document.getElementById('tooltip');
-
-                    newPasswordInput.addEventListener('focus', function() {
-                      tooltip.style.display = 'block';
-                    });
-
-                    newPasswordInput.addEventListener('blur', function() {
-                      tooltip.style.display = 'none';
-                    });
-             // define handy variables
-
-
-                    const generatePass = function() {
-
-                    const upperABC = 'ABCDEFGHIGKLMNOPQRSTUVWXYZ';
-                    const lowerAbc = 'abcdefghigklmnopqrstuvwxyz';
-                    const specialChar = '!@£$%^&*()_+?/#';
-                    const numbers = "123456789";
-
-                    const charset = upperABC + lowerAbc + specialChar + numbers;
-                    const passLength = 12;
-
-                    let password = '';
-                    for(let i = 0 ; i < 12; i++ ) {
-                      const randomIndex = Math.floor(Math.random() * charset.length )
-                        password += charset[randomIndex];
-
-                        }
-                    console.log(password);
-                    return password;
-                    };
-                    // get the field in the html file to update
-                    const updateField = function(){
-                    const passwordField = document.getElementById('generatedPassword');
-                    const generatefn = generatePass();
-                    passwordField.value = generatefn;
-                    };
-                    // listen to button click
-                    const button = document.getElementById('generateBtn');
-                    button.addEventListener("click",updateField);
-
-                    // clear inputs after refresh
-                    function clearInp () {
-                    document.getElementById('generatedPassword').value = "";
-                    }
-
-
-                    </script>
-          <label class="label">Notes:</label>
-
-          <textarea class="input" id="notes" name="notes" placeholder="Enter Notes"></textarea>
-          <button class="button cancel" type="button" onclick="clearInp()">Cancel</button>
-
-          <button class="button" type = "submit">Save</button>
-          </form>
-
-          <script>
-          // clear inputs after refresh
-          function clearInp() {
-          document.getElementById('myform').reset();
-          }
-          </script>
-
-
-
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-
-  </div>
-
-
-</body>
-
+  </body>
 </html>
