@@ -1,193 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Home Page</title>
 
-<head>
-  <title>Home Page</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
-
-  <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <!-- <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" /> -->
-  <link rel="stylesheet" href="/styles/first.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/styles/first.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+  </head>
 
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-</head>
+  <body>
+    <sidebar class="sidebar">
+      <h2 style="color: black">Discover</h2>
 
-<body>
+      <ul>
+        <li>
+          <a href="/"
+            ><button><i class="fas fa-home"></i> Home</button></a
+          >
+        </li>
+        <li>
+          <button><i class="fas fa-lock"></i> Passwords</button>
+        </li>
+        <li>
+          <button><i class="fas fa-search"></i> Browse</button>
+        </li>
+        <li>
+          <a href="/new"
+            ><button><i class="fas fa-add"></i> Add Account</button></a
+          >
+        </li>
+        <% if (admin) { %>
+        <li>
+          <a href="/add_user"
+            ><button><i class="fas fa-add"></i> Add User</button></a
+          >
+        </li>
+        <% } %>
+        <li></li>
 
+        <li></li>
+      </ul>
+    </sidebar>
 
-  <sidebar class="sidebar">
-    <h2 style="color: black;">Discover</h2>
+    <div class="content">
+      <div class="header">
+        <h1>
+          PasswordKeepR
+          <span class="logo"
+            ><i
+              class="fa-sharp fa-solid fa-key fa-flip-horizontal"
+              style="color: #000000"
+            ></i
+          ></span>
+        </h1>
 
-    <ul>
+        <div class="actions">
+          <div class="dropdown">
+            <p class="dropbtn">Welcome: <%= userName %></p>
 
-      <li><a href="/" ><button><i class="fas fa-home"></i> Home</button></a></li>
-      <li><button><i class="fas fa-lock"></i> Passwords</button></li>
-      <li><button><i class="fas fa-search"></i> Browse</button></li>
-      <li><a href="/new" ><button><i class="fas fa-add"></i> Add Account</button></a></li>
-      <% if (admin) { %>
-        <li><a href="/add_user" ><button><i class="fas fa-add"></i> Add User</button></a></li>
-      <% } %>
-      <li></li>
-
-      <li></li>
-
-    </ul>
-
-  </sidebar>
-
-
-
-
-  <div class="content">
-
-    <div class="header">
-
-      <h1>PasswordKeepR <span class="logo"><i class="fa-sharp fa-solid fa-key fa-flip-horizontal" style="color: #000000;"></i></i></span></h1>
-
-
-      <div class="actions">
-
-             <div class="dropdown">
-
-            <p class="dropbtn">Welcome: <%= userName %> </p>
-
-          <div class="dropdown-content">
-
-            <form action="/logout" method="POST">
-              <button type="submit" class="btn btn-primary">Logout</button>
-            </form>
-
+            <div class="dropdown-content">
+              <form action="/logout" method="POST">
+                <button type="submit" class="btn btn-primary">Logout</button>
+              </form>
+            </div>
           </div>
-
         </div>
-
       </div>
 
-    </div>
+      <div class="search"></div>
 
-    <div class=" search">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>No</th>
 
+            <th>Website URL</th>
 
+            <th>Username</th>
 
+            <th>Password</th>
 
-    </div>
+            <th>Copy Password</th>
 
-    <table class="table">
+            <th>Edit</th>
 
-      <thead>
+            <th>Delete</th>
+          </tr>
+        </thead>
 
-        <tr>
-
-          <th>No</th>
-
-          <th>Website URL</th>
-
-          <th>Username</th>
-
-          <th>Password</th>
-
-          <th>Copy Password</th>
-
-          <th>Edit</th>
-
-          <th>Delete</th>
-
-        </tr>
-
-      </thead>
-
-      <tbody>
-
-        <% if (accounts && accounts.length > 0) { %>
+        <tbody>
+          <% if (accounts && accounts.length > 0) { %>
           <!-- Render rows dyncamically -->
           <% for (let parameter in accounts) { %>
-            <tr>
+          <tr>
+            <%const index = Number(parameter)%>
 
-              <%const index = Number(parameter)%>
+            <!-- Colors for categories -->
+            <td><%= index + 1 %></td>
 
-              <!-- Colors for categories -->
-              <td ><%= index + 1 %></td>
+            <td>
+              <a href="<%= accounts[parameter].website_url %>">
+                <%= accounts[parameter].website_url %></a
+              >
+            </td>
 
-              <td><a href="<%= accounts[parameter].website_url %>"> <%= accounts[parameter].website_url %></a></td>
+            <td><%= accounts[parameter].username %></td>
 
-              <td ><%= accounts[parameter].username %></td>
+            <td id="password"><%= accounts[parameter].password %></td>
 
-              <td id="password" ><%= accounts[parameter].password %></td>
+            <td><button onclick="myfunction()" class="edit">Copy</button></td>
 
-              <td><button onclick="myfunction()" class="edit">Copy</button></td>
-
-              <td class="action">
-
-                <button class="edit" onclick="openEditPage('<%= accounts[parameter].id %>')">Edit</button>
-                <script>
+            <td class="action">
+              <button
+                class="edit"
+                onclick="openEditPage('<%= accounts[parameter].id %>')"
+              >
+                Edit
+              </button>
+              <script>
                 ////////////////////////////////////////////////////////////////////////
                 ///function to copy password to clipboard
                 ///////////////////////////////////////////////////////////////////
                 function myfunction() {
+                  const copyPassword = document
+                    .getElementById("password")
+                    .textContent.trim();
 
-                  const  copyPassword = document.getElementById("password").textContent.trim();
+                  // Create a temporary textarea element to copy text
+                  const tempTextarea = document.createElement("textarea");
+                  tempTextarea.value = copyPassword;
+                  document.body.appendChild(tempTextarea);
 
-                              // Create a temporary textarea element to copy text
-                        const tempTextarea = document.createElement("textarea");
-                        tempTextarea.value = copyPassword;
-                        document.body.appendChild(tempTextarea);
+                  // select the contents of each items
 
-                        // select the contents of each items
+                  tempTextarea.select();
+                  tempTextarea.setSelectionRange(0, 99999);
 
-                        tempTextarea.select();
-                        tempTextarea.setSelectionRange(0, 99999);
+                  // Copy the selected text
+                  document.execCommand("copy");
 
-                        // Copy the selected text
-                        document.execCommand("copy");
+                  // Remove the temporary textarea
+                  document.body.removeChild(tempTextarea);
 
-                        // Remove the temporary textarea
-                        document.body.removeChild(tempTextarea);
-
-                        alert("copied the text:" + copyPassword);
-
-                      }
-                      ////////////////////////////////////////////////////////////////////////
-                      ///function to fire on Edit button
-                      ///////////////////////////////////////////////////////////////////
+                  alert("copied the text:" + copyPassword);
+                }
+                ////////////////////////////////////////////////////////////////////////
+                ///function to fire on Edit button
+                ///////////////////////////////////////////////////////////////////
 
                 function openEditPage(accountID) {
                   window.location.href = `/edit?accountID=${accountID}`;
                 }
-                </script>
-
-              </td>
-              <td class="action">
-
-                <form method="POST" action="/delete">
-                  <input type="hidden" name="accountID" value="<%= accounts[parameter].id %>">
-                  <button class="delete">Delete</button>
-                </form>
-
-              </td>
-
-            </tr>
-          <% } %>
-        <% } else { %>
+              </script>
+            </td>
+            <td class="action">
+              <form method="POST" action="/delete">
+                <input
+                  type="hidden"
+                  name="accountID"
+                  value="<%= accounts[parameter].id %>"
+                />
+                <button class="delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% } %> <% } else { %>
           <tr>
             <td colspan="6">No accounts found.</td>
           </tr>
-        <% } %>
-
-      </tbody>
-
-    </table>
-
-  </div>
-
-
-</body>
-
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </body>
 </html>
