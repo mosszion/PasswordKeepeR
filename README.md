@@ -1,20 +1,27 @@
-LHL Node Skeleton
+PasswordKeepR
 =========
 
-## Project Setup
 
-The following steps are only for _one_ of the group members to perform.
+## About PasswordKeepR
+PasswordKeepR is a password manager application designed to help Orgnaizations securely store and manage their passwords for various online accounts. Here's how it works and why it's useful:
 
-1. Create your own copy of this repo using the `Use This Template` button, ideally using the name of your project. The repo should be marked Public
-2. Verify that the skeleton code now shows up in your repo on GitHub, you should be automatically redirected
-3. Clone your copy of the repo to your dev machine
-4. Add your team members as collaborators to the project so that they can push to this repo
-5. Let your team members know the repo URL so that they use the same repo (they should _not_ create a copy/fork of this repo since that will add additional workflow complexity to the project)
+  1. Password Storage: PasswordKeepR stores all your passwords in a vault. This means you only need to remember one master password to access all your other passwords.
+  2. Automatic Login: PasswordKeepR can automatically fill in your passwords for websites and apps, saving you the hassle of typing them in manually each time.
+
+  3. Generate Secure Passwords: PasswordKeepR gives you options to generate strong, unique passwords for each of your accounts, reducing the risk of your accounts being compromised by using weak or reused passwords.
+
+## Glance of PasswordKeepR
+! [Login/Logout page](/public/images/Login:out.png)
+! [Accounts page or Index ](/public/images/accountsPage.png)
+! [Add account page](/public/images/addAccount.png)
+! [Copy password of account ](/public/images/copyPass.png)
+! [Edit account page](/public/images/editAccount.png)
+! [Add user page](/public/images/addUser.png)
+
 
 
 ## Getting Started
-
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
+1. Create a new repository using this repository as a template
 2. Update the .env file with your correct local information 
   - username: `labber` 
   - password: `labber` 
@@ -25,7 +32,7 @@ The following steps are only for _one_ of the group members to perform.
   - Check the db folder to see what gets created and seeded in the SDB
 7. Run the server: `npm run local`
   - Note: nodemon is used, so you should not have to restart your server
-8. Visit `http://localhost:8080/`
+8. Visit `http://localhost:8070/`
 
 ## Warnings & Tips
 
