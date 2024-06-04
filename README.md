@@ -12,11 +12,11 @@ PasswordKeepR is a password manager application designed to help Orgnaizations s
 
 ## Glance of PasswordKeepR
 ! ["Login/Logout page"](public/images/Login:out.png)
-! [Accounts page or Index ](/public/images/accountsPage.png)
-! [Add account page](/public/images/addAccount.png)
-! [Copy password of account ](/public/images/copyPass.png)
-! [Edit account page](/public/images/editAccount.png)
-! [Add user page](/public/images/addUser.png)
+! ["Accounts page or Index "](/public/images/accountsPage.png)
+! ["Add account page"](/public/images/addAccount.png)
+! ["Copy password of account "](/public/images/copyPass.png)
+! ["Edit account page"](/public/images/editAccount.png)
+! ["Add user page"](/public/images/addUser.png)
 
 
 
